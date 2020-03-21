@@ -19,6 +19,12 @@ const Talla = require('./talla');
 const Grilli = require('./grilli');
 const Greta = require('./greta');
 const Karvinen = require('./karvinen');
+const Rasila = require('./rasila')
+const Kimmo = require('./kimmo')
+const Gruumer = require('./gruumer')
+const Avaimet = require('./avaimet')
+const Lakupena = require('./lakupena')
+const Tallapeli = require('./tallapeli')
 
 // Uncommon
 const Wabuu = require('./wabuu');
@@ -31,6 +37,8 @@ const NiggerRacer = require('./niggerracer');
 const Mikko = require('./mikko');
 const Chitti = require('./chitti');
 const Pupu15 = require('./pupu15');
+const Olli = require('./olli')
+const Pena = require('./pena')
 
 // Rare
 const Pepega = require('./pepega');
@@ -41,6 +49,8 @@ const Froge = require('./froge');
 const Kolmioukko = require('./kolmioukko');
 const Ricardo = require('./ricardo');
 const Tallahasseessahallat = require('./tallahasseessahallat');
+const Skeletoid = require('./skeletoid')
+const Justice = require('./justice')
 
 module.exports = {
   Wabuu,
@@ -80,5 +90,15 @@ module.exports = {
   Ricardo,
   Greta,
   Tallahasseessahallat,
-  Karvinen
+  Karvinen,
+  Rasila,
+  Olli,
+  Kimmo,
+  Skeletoid,
+  Gruumer,
+  Pena,
+  Avaimet,
+  Lakupena,
+  Justice,
+  Tallapeli
 }
