@@ -49,7 +49,7 @@ const Froge = require('./froge');
 const Kolmioukko = require('./kolmioukko');
 const Ricardo = require('./ricardo');
 const Tallahasseessahallat = require('./tallahasseessahallat');
-const Skeletoid = require('./skeletoid')
+const Skeletoad = require('./skeletoad')
 const Justice = require('./justice')
 
 module.exports = {
@@ -94,7 +94,7 @@ module.exports = {
   Rasila,
   Olli,
   Kimmo,
-  Skeletoid,
+  Skeletoad,
   Gruumer,
   Pena,
   Avaimet,
