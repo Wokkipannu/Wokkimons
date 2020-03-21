@@ -106,3 +106,4 @@ dist
 players.json
 db
 db/*
+config.json
