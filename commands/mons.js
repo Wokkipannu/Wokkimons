@@ -16,11 +16,15 @@ module.exports = {
     // If we don't have a player, create a fake one
     if (!player) player = { id: msg.author.id, monsters: [] };
 
+    let color = '#1e90ff';
+    if (player.color) color = player.color;
+
     const common = mons.filter(mon => mon.rarity === 1);
     const uncommon = mons.filter(mon => mon.rarity === 2);
     const rare = mons.filter(mon => mon.rarity === 3);
 
     let embed = new MessageEmbed()
+      .setColor(color)
       .setTitle(`${msg.author.username} Wokkimondex`);
       embed.addField('Common', common.map(mon => `${mon.name} ${player.monsters.find(monster => monster.name === mon.name) ? '✅' : '❌'}`).join('\n'), true)
       embed.addField('Uncommon', uncommon.map(mon => `${mon.name} ${player.monsters.find(monster => monster.name === mon.name) ? '✅' : '❌'}`).join('\n'), true)
