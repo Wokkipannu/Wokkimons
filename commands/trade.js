@@ -8,7 +8,7 @@ module.exports = {
     const receiver = msg.mentions.users.first();
     const monster = parseInt(args[1]);
 
-    if (!receiver || !monster || !Number.isInteger(monster)) return msg.reply('Oikea muoto on: `trade <Mention> <Monster ID>`');
+    if (!receiver || !Number.isInteger(monster)) return msg.reply('Oikea muoto on: `trade <Mention> <Monster ID>`');
 
     let player = players.find(player => player.id === msg.author.id);
     if (!player || player.monsters.length === 0) return msg.reply('Sinulla ei ole yhtään monsteria!');
