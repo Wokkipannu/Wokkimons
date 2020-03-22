@@ -5,8 +5,8 @@ module.exports = class Yandex extends Monster {
     super(level);
 
     this.name = 'Yandex'
-    this.image = 'https://im2.ezgif.com/tmp/ezgif-2-9c70b30dbad8.gif';
-    this.shinyImage = 'https://im2.ezgif.com/tmp/ezgif-2-9c70b30dbad8.gif';
+    this.image = 'https://i.imgur.com/OHWzczh.gif';
+    this.shinyImage = 'https://i.imgur.com/OHWzczh.gif';
     this.rarity = 3;
     this.isShiny = false;
   }
