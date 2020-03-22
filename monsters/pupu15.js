@@ -5,8 +5,8 @@ module.exports = class Pupu15 extends Monster {
     super(level);
 
     this.name = 'Pupu15'
-    this.image = 'https://cdn.discordapp.com/attachments/534773820091793411/690907812913741854/pupu15.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/534773820091793411/690907812913741854/pupu15.png';
+    this.image = 'https://i.imgur.com/FWvjnLL.png';
+    this.shinyImage = 'https://i.imgur.com/FWvjnLL.png';
     this.rarity = 2;
     this.isShiny = false;
   }

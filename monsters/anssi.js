@@ -5,8 +5,8 @@ module.exports = class Anssi extends Monster {
     super(level);
 
     this.name = 'Anssi'
-    this.image = 'https://vignette.wikia.nocookie.net/sintuubapaska/images/6/64/Anssi.jpg/revision/latest/scale-to-width-down/340?cb=20121030170906';
-    this.shinyImage = 'https://vignette.wikia.nocookie.net/sintuubapaska/images/6/64/Anssi.jpg/revision/latest/scale-to-width-down/340?cb=20121030170906';
+    this.image = 'https://i.imgur.com/g7vEUgf.jpg';
+    this.shinyImage = 'https://i.imgur.com/g7vEUgf.jpg';
     this.rarity = 1;
     this.isShiny = false;
   }

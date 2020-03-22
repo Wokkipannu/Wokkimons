@@ -5,8 +5,8 @@ module.exports = class Mikko extends Monster {
     super(level);
 
     this.name = 'Mikko'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/690640462519730196/enhalua.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/690640462519730196/enhalua.png';
+    this.image = 'https://i.imgur.com/1TioaPe.png';
+    this.shinyImage = 'https://i.imgur.com/1TioaPe.png';
     this.rarity = 2;
     this.isShiny = false;
   }

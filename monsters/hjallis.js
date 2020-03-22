@@ -5,8 +5,8 @@ module.exports = class Jose extends Monster {
     super(level);
 
     this.name = 'Hjallis'
-    this.image = 'https://cdn.discordapp.com/emojis/658143852439535627.png?v=1';
-    this.shinyImage = 'https://cdn.discordapp.com/emojis/658143852439535627.png?v=1';
+    this.image = 'https://i.imgur.com/66luRtV.png';
+    this.shinyImage = 'https://i.imgur.com/66luRtV.png';
     this.rarity = 1;
     this.isShiny = false;
   }

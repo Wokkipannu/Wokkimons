@@ -5,8 +5,8 @@ module.exports = class Greta extends Monster {
     super(level);
 
     this.name = 'Greta'
-    this.image = 'https://cdn.discordapp.com/emojis/660554164224655372.png?v=1';
-    this.shinyImage = 'https://cdn.discordapp.com/emojis/660553448764473364.png?v=1';
+    this.image = 'https://i.imgur.com/gIqzFLQ.png';
+    this.shinyImage = 'https://i.imgur.com/NkGuKtm.png';
     this.rarity = 1;
     this.isShiny = false;
   }

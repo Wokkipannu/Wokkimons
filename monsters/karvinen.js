@@ -5,8 +5,8 @@ module.exports = class Karvinen extends Monster {
     super(level);
 
     this.name = 'Karvinen'
-    this.image = 'https://cdn.discordapp.com/attachments/534773820091793411/690910734183563354/Discord_wmb35EdQaV.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/534773820091793411/690910734183563354/Discord_wmb35EdQaV.png';
+    this.image = 'https://i.imgur.com/2MF6FYf.png';
+    this.shinyImage = 'https://i.imgur.com/2MF6FYf.png';
     this.rarity = 1;
     this.isShiny = false;
   }

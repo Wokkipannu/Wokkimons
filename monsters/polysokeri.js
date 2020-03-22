@@ -5,8 +5,8 @@ module.exports = class Polysokeri extends Monster {
     super(level);
 
     this.name = 'Pölysokerikakku'
-    this.image = 'https://i.pinimg.com/originals/41/24/16/412416f0fd854693a0ca4cce03d3ff12.gif';
-    this.shinyImage = 'https://i.pinimg.com/originals/41/24/16/412416f0fd854693a0ca4cce03d3ff12.gif';
+    this.image = 'https://i.imgur.com/gZckwJI.gif';
+    this.shinyImage = 'https://i.imgur.com/gZckwJI.gif';
     this.rarity = 3;
     this.isShiny = false;
   }

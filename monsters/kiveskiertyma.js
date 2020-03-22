@@ -5,8 +5,8 @@ module.exports = class Kiveskiertyma extends Monster {
     super(level);
 
     this.name = 'Kiveskiertymä'
-    this.image = 'https://www.terveyskyla.fi/miestalo/PublishingImages/Sukuelin/kiveskiertym%C3%A4_ilmanteksteja.jpg?RenditionID=26';
-    this.shinyImage = 'https://www.terveyskyla.fi/miestalo/PublishingImages/Sukuelin/kiveskiertym%C3%A4_ilmanteksteja.jpg?RenditionID=26';
+    this.image = 'https://i.imgur.com/8bwDN4d.jpg';
+    this.shinyImage = 'https://i.imgur.com/8bwDN4d.jpg';
     this.rarity = 2;
     this.isShiny = false;
   }

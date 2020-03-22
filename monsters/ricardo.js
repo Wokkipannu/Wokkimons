@@ -5,8 +5,8 @@ module.exports = class Ricardo extends Monster {
     super(level);
 
     this.name = 'Ricardo'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/690909317225775154/ricardo.gif';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/690909317225775154/ricardo.gif';
+    this.image = 'https://i.imgur.com/PhrGRGL.gif';
+    this.shinyImage = 'https://i.imgur.com/PhrGRGL.gif';
     this.rarity = 3;
     this.isShiny = false;
   }

@@ -5,8 +5,8 @@ module.exports = class NiggerRacer extends Monster {
     super(level);
 
     this.name = 'Nigger Racer'
-    this.image = 'https://cdn.discordapp.com/attachments/534773820091793411/690623276527124480/unknown.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/534773820091793411/690623276527124480/unknown.png';
+    this.image = 'https://i.imgur.com/V040C86.png';
+    this.shinyImage = 'https://i.imgur.com/V040C86.png';
     this.rarity = 2;
     this.isShiny = false;
   }

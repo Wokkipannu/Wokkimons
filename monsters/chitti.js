@@ -5,8 +5,8 @@ module.exports = class Chitti extends Monster {
     super(level);
 
     this.name = 'Chitti'
-    this.image = 'https://cdn.discordapp.com/attachments/534773820091793411/690699031453630544/chitti.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/534773820091793411/690699031453630544/chitti.png';
+    this.image = 'https://i.imgur.com/ZzlgqZP.png';
+    this.shinyImage = 'https://i.imgur.com/ZzlgqZP.png';
     this.rarity = 2;
     this.isShiny = false;
   }

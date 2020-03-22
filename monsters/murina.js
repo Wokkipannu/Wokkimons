@@ -5,8 +5,8 @@ module.exports = class Murina extends Monster {
     super(level);
 
     this.name = 'Murina'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/690214586561069118/murinakarhu.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/690214586561069118/murinakarhu.png';
+    this.image = 'https://i.imgur.com/RcM0OU7.png';
+    this.shinyImage = 'https://i.imgur.com/RcM0OU7.png';
     this.rarity = 1;
     this.isShiny = false;
   }

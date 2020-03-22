@@ -5,8 +5,8 @@ module.exports = class Tuomo extends Monster {
     super(level);
 
     this.name = 'Tuomo';
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/689922552105140248/tuomo.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/689922552105140248/tuomo.png';
+    this.image = 'https://i.imgur.com/trbXcd4.png';
+    this.shinyImage = 'https://i.imgur.com/trbXcd4.png';
     this.rarity = 1;
     this.isShiny = false;
   }

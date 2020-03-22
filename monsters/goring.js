@@ -5,8 +5,8 @@ module.exports = class Goring extends Monster {
     super(level);
 
     this.name = 'Göring'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/689934550985474070/laski.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/689934550985474070/laski.png';
+    this.image = 'https://i.imgur.com/QnkB97h.png';
+    this.shinyImage = 'https://i.imgur.com/QnkB97h.png';
     this.rarity = 2;
     this.isShiny = false;
   }

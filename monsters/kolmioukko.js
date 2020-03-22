@@ -5,8 +5,8 @@ module.exports = class Kolmioukko extends Monster {
     super(level);
 
     this.name = 'Kolmioukko'
-    this.image = 'https://cdn.discordapp.com/attachments/534773820091793411/690902362562363392/kolmioukko.gif';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/534773820091793411/690902362562363392/kolmioukko.gif';
+    this.image = 'https://i.imgur.com/u4QidV6.gif';
+    this.shinyImage = 'https://i.imgur.com/u4QidV6.gif';
     this.rarity = 3;
     this.isShiny = false;
   }

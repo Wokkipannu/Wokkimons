@@ -5,8 +5,8 @@ module.exports = class Mimo extends Monster {
     super(level);
 
     this.name = 'Mimo'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/689934638243905717/dingo-li.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/689934638243905717/dingo-li.png';
+    this.image = 'https://i.imgur.com/1IAVnRX.gif';
+    this.shinyImage = 'https://i.imgur.com/1IAVnRX.gif';
     this.rarity = 1;
     this.isShiny = false;
   }

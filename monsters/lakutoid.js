@@ -5,8 +5,8 @@ module.exports = class Lakutoid extends Monster {
     super(level);
 
     this.name = 'Lakutoid'
-    this.image = 'https://cdn.discordapp.com/emojis/657297879861428269.png?v=1';
-    this.shinyImage = 'https://cdn.discordapp.com/emojis/690519849398435840.png?v=1';
+    this.image = 'https://i.imgur.com/ZYpdkno.png';
+    this.shinyImage = 'https://i.imgur.com/UlEZpJ4.png';
     this.rarity = 1;
     this.isShiny = false;
   }

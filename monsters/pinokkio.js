@@ -5,8 +5,8 @@ module.exports = class Pinokkio extends Monster {
     super(level);
 
     this.name = 'Pinokkio'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/690160061347135565/pinokkio.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/690160061347135565/pinokkio.png';
+    this.image = 'https://i.imgur.com/HP0qPfv.png';
+    this.shinyImage = 'https://i.imgur.com/HP0qPfv.png';
     this.rarity = 1;
     this.isShiny = false;
   }

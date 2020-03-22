@@ -5,8 +5,8 @@ module.exports = class Toveri extends Monster {
     super(level);
 
     this.name = 'Toveri'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/689849784999215132/neekeri.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/689849784999215132/neekeri.png';
+    this.image = 'https://i.imgur.com/ItfvElx.png';
+    this.shinyImage = 'https://i.imgur.com/ItfvElx.png';
     this.rarity = 1;
     this.isShiny = false;
   }

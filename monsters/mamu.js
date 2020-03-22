@@ -5,8 +5,8 @@ module.exports = class Mamu extends Monster {
     super(level);
 
     this.name = 'Mamu'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/689935381008875612/mamu.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/689935381008875612/mamu.png';
+    this.image = 'https://i.imgur.com/x8oa0zw.png';
+    this.shinyImage = 'https://i.imgur.com/x8oa0zw.png';
     this.rarity = 2;
     this.isShiny = false;
   }

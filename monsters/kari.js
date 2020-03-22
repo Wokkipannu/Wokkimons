@@ -5,8 +5,8 @@ module.exports = class Kari extends Monster {
     super(level);
 
     this.name = 'Kari'
-    this.image = 'https://cdn.discordapp.com/attachments/689819288210505806/690174239654936628/latest.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/689819288210505806/690174282822844507/a4230ec62a4d9dbd85af4decf1dff19e5dc6373e_full.png';
+    this.image = 'https://i.imgur.com/cMaQvKw.png';
+    this.shinyImage = 'https://i.imgur.com/vvTqzox.png';
     this.rarity = 1;
     this.isShiny = false;
   }

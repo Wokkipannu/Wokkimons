@@ -5,8 +5,8 @@ module.exports = class Hampaatonlaski extends Monster {
     super(level);
 
     this.name = 'Hampaatonläski'
-    this.image = 'https://cdn.discordapp.com/attachments/655224789996404792/663538187288838166/unknown.png';
-    this.shinyImage = 'https://cdn.discordapp.com/attachments/655224789996404792/663538187288838166/unknown.png';
+    this.image = 'https://i.imgur.com/SxgsS2C.png';
+    this.shinyImage = 'https://i.imgur.com/SxgsS2C.png';
     this.rarity = 2;
     this.isShiny = false;
   }
