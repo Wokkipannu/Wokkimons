@@ -1,5 +1,3 @@
-//https://imgur.com/a/2tTVYpr
-
 // Moving from having separate files for each monster to having them in one array
 // In long the run this will be easier to handle
 // Disregard the order when adding more monsters. ID should never change.
@@ -53,6 +51,15 @@ const allMonsters = [
   {"id": 46, "name": "Skeletoad", "image": "https://i.imgur.com/Kzh84zz.gif", "rarity": 3, "shinyImage": "https://i.imgur.com/Kzh84zz.gif"},
   {"id": 47, "name": "Justice", "image": "https://i.imgur.com/NTItTrO.gif", "rarity": 3, "shinyImage": "https://i.imgur.com/NTItTrO.gif"},
   {"id": 48, "name": "Augh", "image": "https://i.imgur.com/Sl9OMgj.gif", "rarity": 3, "shinyImage": "https://i.imgur.com/Sl9OMgj.gif"},
+  {"id": 49, "name": "Ruokasooda", "image": "https://i.imgur.com/vVmZ8Bt.png", "rarity": 1, "shinyImage": "https://i.imgur.com/vVmZ8Bt.png"},
+  {"id": 50, "name": "Niilo22", "image": "https://i.imgur.com/6Oxzt5S.jpg", "rarity": 2, "shinyImage": "https://i.imgur.com/6Oxzt5S.jpg"},
+  {"id": 51, "name": "Manne", "image": "https://i.imgur.com/gNmsExj.png", "rarity": 1, "shinyImage": "https://i.imgur.com/gNmsExj.png"},
+  {"id": 52, "name": "Breivik", "image": "https://i.imgur.com/4HJcpww.jpg", "rarity": 2, "shinyImage": "https://i.imgur.com/4HJcpww.jpg"},
+  {"id": 53, "name": "Monimetallilamppu", "image": "https://i.imgur.com/IhvHWIR.png", "rarity": 1, "shinyImage": "https://i.imgur.com/IhvHWIR.png"},
+  {"id": 54, "name": "Gandalf", "image": "https://i.imgur.com/wK6dJU2.png", "rarity": 2, "shinyImage": "https://i.imgur.com/wK6dJU2.png"},
+  {"id": 55, "name": "Jesus", "image": "https://i.imgur.com/ESeqPEC.png", "rarity": 1, "shinyImage": "https://i.imgur.com/ESeqPEC.png"},
+  {"id": 56, "name": "Cold Brew", "image": "https://i.imgur.com/GsJAKvS.png", "rarity": 2, "shinyImage": "https://i.imgur.com/GsJAKvS.png"},
+  {"id": 57, "name": "Klonkku", "image": "https://i.imgur.com/HlHzfsE.jpg", "rarity": 1, "shinyImage": "https://i.imgur.com/HlHzfsE.jpg"},
 ];
 
 const commonMonsters = allMonsters.filter(monster => monster.rarity === 1);
