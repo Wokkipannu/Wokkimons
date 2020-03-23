@@ -9,4 +9,4 @@ Monster collecting game for Discord. Inspired by PokeCord. Collect em' all!
   "TOKEN": "BOT TOKEN FROM DISCORD"
 }
 ```
-- Seuqlize configuration [/database/config/config.json](https://sequelize.org/master/manual/migrations.html#configuration)
+- Sequelize configuration [/database/config/config.json](https://sequelize.org/master/manual/migrations.html#configuration)
