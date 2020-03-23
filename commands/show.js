@@ -7,6 +7,7 @@ const moment = require('moment');
 module.exports = {
   name: 'show',
   description: 'Show a monster',
+  guildOnly: false,
   async execute(msg, args) {
     const number = parseInt(args[0]);
 

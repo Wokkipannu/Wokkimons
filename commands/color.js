@@ -3,6 +3,7 @@ const PlayerController = require('../controllers/PlayerController');
 
 module.exports = {
   name: 'color',
+  guildOnly: false,
   description: 'Change embed color',
   async execute(msg, args) {
     const color = args[0];

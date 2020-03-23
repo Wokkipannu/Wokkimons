@@ -4,6 +4,7 @@ const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'monsters',
+  guildOnly: false,
   description: 'Display monsters',
   async execute(msg, args) {
     let player = await PlayerController.getPlayer(msg.author.id);
@@ -11,13 +12,23 @@ module.exports = {
 
     let color = player.color || '#1e90ff';
 
-    player.monsters.forEach(monster => {
-      Object.assign(monster, Monsters.allMonsters.find(mon => mon.id === monster.monsterId));
-    })
+    let mons = [];
 
-    const common = player.monsters.filter(mon => mon.rarity === 1);
-    const uncommon = player.monsters.filter(mon => mon.rarity === 2);
-    const rare = player.monsters.filter(mon => mon.rarity === 3);
+    player.monsters.forEach(monster => {
+      let mon = Monsters.allMonsters.find(m => m.id === monster.monsterId);
+      mons.push({
+        id: monster.id,
+        monsterId: mon.id,
+        level: monster.level,
+        name: mon.name,
+        rarity: mon.rarity,
+        isShiny: monster.isShiny
+      });
+    });
+
+    const common = mons.filter(mon => mon.rarity === 1);
+    const uncommon = mons.filter(mon => mon.rarity === 2);
+    const rare = mons.filter(mon => mon.rarity === 3);
 
     if (player) {
       let embed = new MessageEmbed()

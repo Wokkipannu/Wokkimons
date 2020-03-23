@@ -6,6 +6,7 @@ const Monsters = require('../monsters/monsters');
 module.exports = {
   name: 'release',
   description: 'Release monster',
+  guildOnly: false,
   async execute(msg, args) {
     const number = parseInt(args[0]);
     if (number) {

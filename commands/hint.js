@@ -1,6 +1,7 @@
 module.exports = {
   name: 'hint',
   description: 'Get hint on monsters name',
+  guildOnly: true,
   execute(msg, args) {
     const currentMonster = msg.client.currentMonster;
 

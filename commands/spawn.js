@@ -4,6 +4,7 @@ const Monsters = require('../monsters/monsters');
 module.exports = {
   name: 'spawn',
   description: 'Force spawn a monster',
+  guildOnly: false,
   execute(msg, args) {
     if (msg.author.id !== '108299947257925632') return;
 
@@ -15,7 +16,7 @@ module.exports = {
     monster.isShiny = isShiny ? 1 : 0;
     monster.level = Monsters.getLevel();
 
-    msg.client.currentMonster = monster;
+    msg.client.currentMonster.set(msg.guild.id, monster);
 
     const embed = new MessageEmbed()
       .setTitle(`Villi ${monster.isShiny ? '⭐ monsteri' : 'monsteri'} ilmestyi!`)

@@ -6,6 +6,7 @@ const Monsters = require('../monsters/monsters');
 module.exports = {
   name: 'give',
   description: 'Give a monster',
+  guildOnly: true,
   async execute(msg, args) {
     if (msg.author.id !== '108299947257925632') return;
 

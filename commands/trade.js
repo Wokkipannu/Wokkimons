@@ -5,6 +5,7 @@ const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'trade',
+  guildOnly: true,
   description: 'Trade a monster',
   async execute(msg, args) {
     const receiver = msg.mentions.users.first();
@@ -19,10 +20,14 @@ module.exports = {
 
     let receivingPlayer = await PlayerController.getPlayer(receiver.id);
     if (!receivingPlayer) receivingPlayer = await PlayerController.createPlayer(receiver.id);
-    let updatedMon = await MonsterController.updateMonster(monster, receivingPlayer.id)
 
-    Object.assign(mon, Monsters.allMonsters.find(m => m.id === mon.monsterId));
+    mon.PlayerId = receivingPlayer.id;
+    mon.save();
 
-    msg.reply(`Annoit ${mon.name}monin pelaajalle ${receiver.username}`);
+    //let updatedMon = await MonsterController.updateMonster(monster, receivingPlayer.id)
+
+    let m = Monsters.allMonsters.find(m => m.id === mon.monsterId);
+
+    msg.reply(`Annoit ${m.name}monin pelaajalle ${receiver.username}`);
   }
 }

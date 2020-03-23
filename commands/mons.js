@@ -5,6 +5,7 @@ const Monsters = require('../monsters/monsters');
 module.exports = {
   name: 'mons',
   description: 'Display all possible monsters',
+  guildOnly: false,
   async execute(msg, args) {
     let player = await PlayerController.getPlayer(msg.author.id);
     if (!player) player = { userId: msg.author.id, monsters: [] }

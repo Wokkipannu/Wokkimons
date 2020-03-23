@@ -1,17 +1,21 @@
 const Monsters = require('../monsters/monsters');
 
 module.exports = class Spawner {
-  constructor(dispatcher) {
+  constructor(dispatcher, serverId, channelId) {
     this.spawner;
     this.monster;
     this.dispatcher = dispatcher;
     this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
     this.rarity;
     this.isShiny;
+    this.serverId = serverId;
+    this.channelId = channelId;
+    this.status;
   }
 
   start() {
-    console.log(`Monster spawner started with ${this.timer / 60000} minutes interval`);
+    console.log(`Monster spawner started on server ${this.serverId} with ${this.timer / 60000} minutes interval`);
+    this.status = true;
     this.spawner = setInterval(() => {
       this.isShiny = this.rollShiny();
       this.rarity = this.randomizeRarity();
@@ -25,8 +29,8 @@ module.exports = class Spawner {
       else if (this.rarity === 3) this.monster = Monsters.rareMonsters[Math.floor(Math.random() * Monsters.rareMonsters.length)];
       this.monster.level = Monsters.getLevel();
 
-      console.log(`Spawning level ${this.monster.level} ${this.monster.name}mon. Spawn took ${this.timer / 60000} minutes.`);
-      this.dispatcher.dispatch('spawn', this.monster);
+      console.log(`Spawning level ${this.monster.level} ${this.monster.name}mon on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
+      this.dispatcher.dispatch('spawn', { monster: this.monster, serverId: this.serverId, channelId: this.channelId });
       this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
       this.stop();
       this.start();
@@ -34,7 +38,12 @@ module.exports = class Spawner {
   }
 
   stop() {
+    this.status = false;
     clearInterval(this.spawner);
+  }
+
+  getStatus() {
+    return this.status;
   }
 
   randomizeRarity() {
