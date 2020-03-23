@@ -1,35 +1,23 @@
-const monsters = require('../monsters');
-const players = require('../players');
 const { MessageEmbed } = require('discord.js');
+const PlayerController = require('../controllers/PlayerController');
+const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'mons',
   description: 'Display all possible monsters',
-  execute(msg, args) {
-    let mons = [];
-    Object.keys(monsters).forEach(monster => {
-      mons.push(new monsters[monster]);
-    });
+  async execute(msg, args) {
+    let player = await PlayerController.getPlayer(msg.author.id);
+    if (!player) player = { userId: msg.author.id, monsters: [] }
 
-    let player = players.find(player => player.id === msg.author.id);
-
-    // If we don't have a player, create a fake one
-    if (!player) player = { id: msg.author.id, monsters: [] };
-
-    let color = '#1e90ff';
-    if (player.color) color = player.color;
-
-    const common = mons.filter(mon => mon.rarity === 1);
-    const uncommon = mons.filter(mon => mon.rarity === 2);
-    const rare = mons.filter(mon => mon.rarity === 3);
+    let color = player.color || '#1e90ff';
 
     let embed = new MessageEmbed()
       .setColor(color)
       .setTitle(`${msg.author.username} Wokkimondex`);
-      embed.addField('Common', common.map(mon => `${mon.name} ${player.monsters.find(monster => monster.name === mon.name) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField('Uncommon', uncommon.map(mon => `${mon.name} ${player.monsters.find(monster => monster.name === mon.name) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField('Rare', rare.map(mon => `${mon.name} ${player.monsters.find(monster => monster.name === mon.name) ? '✅' : '❌'}`).join('\n'), true);
-  
-    msg.channel.send(embed);  
+      embed.addField('Common', Monsters.commonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField('Uncommon', Monsters.uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField('Rare', Monsters.rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
+
+    msg.channel.send(embed); 
   }
 }

@@ -1,43 +1,32 @@
-const players = require('../players');
 const { MessageEmbed } = require('discord.js');
+const PlayerController = require('../controllers/PlayerController');
+const MonsterController = require('../controllers/MonsterController');
+const Monsters = require('../monsters/monsters');
+const moment = require('moment');
 
 module.exports = {
   name: 'show',
   description: 'Show a monster',
-  execute(msg, args) {
+  async execute(msg, args) {
     const number = parseInt(args[0]);
 
-    let player = players.find(player => player.id === msg.author.id);
-    if (player) {
-      let color = '#1e90ff';
-      if (player.color) color = player.color;
+    if (!Number.isInteger(number)) return msg.reply('Oikea muoto `show <id>`');
 
-      const active = player.active || 0;
-      let monster;
-      if (number) {
-        if (!Number.isInteger(number)) return msg.reply('Antamasi arvo ei ole numero!');
-        if (number > player.monsters.length || number < 0) {
-          return msg.reply('Antamallasi numerolla ei ole nekrumonia!');
-        }
-        monster = player.monsters[number];
-      }
-      else monster = player.monsters[active];
+    let player = await PlayerController.getPlayer(msg.author.id);
+    if (!player) return msg.reply('Sinulla ei ole yhtään monsteria');
+    let color = player.color || '#1e90ff';
 
-      if (monster) {
-        const embed = new MessageEmbed()
-          .setColor(color)
-          .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${monster.name}` :monster.name}`)
-          .setDescription(`Taso: **${monster.level}**`)
-          .setImage(monster.isShiny ? monster.shinyImage : monster.image);
-        
-        msg.channel.send(embed);
-      }
-      else {
-        msg.reply('Antamallasi numerolla ei löytynyt nekrumonia!');
-      }
-    }
-    else {
-      msg.reply('Sinulla ei ole nekrumonia! Nappaa sellainen yhden ilmestyessä kirjoittamalla w!catch');
-    }
+    let monster = player.monsters.find(mon => mon.id === number);
+    Object.assign(monster, Monsters.allMonsters.find(mon => mon.id === monster.monsterId));
+    if (!monster) return msg.reply('Antamallasi numerolla ei löytynyt monsteria');
+
+    const embed = new MessageEmbed()
+      .setColor(color)
+      .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${monster.name}` : monster.name}`)
+      .setDescription(`Taso: **${monster.level}**`)
+      .setImage(monster.isShiny ? monster.shinyImage : monster.image)
+      .setFooter(`Napattu ${moment(monster.createdAt).format("DD.MM.YYYY HH.mm")}`);
+
+    msg.channel.send(embed);
   }
 }

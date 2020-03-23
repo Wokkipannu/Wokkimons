@@ -1,24 +1,20 @@
-const players = require('../players');
-const fs = require('fs');
+const { MessageEmbed } = require('discord.js');
+const PlayerController = require('../controllers/PlayerController');
 
 module.exports = {
   name: 'color',
   description: 'Change embed color',
-  execute(msg, args) {
+  async execute(msg, args) {
     const color = args[0];
 
     if (!color) msg.reply('Anna väri hexadesimaalina. Esimerkki `#1e90ff`');
 
-    let player = players.find(player => player.id === msg.author.id);
-    if (player) {
-      player.color = color;
-      fs.writeFile('./players.json', JSON.stringify(players, null, 2), (err) => {
-        if (err) throw err;
-      });
-      msg.reply(`Värisi vaihdettu \`${color}\``);
-    }
-    else {
-      msg.reply('Hanki monsteri ennen kun vaihdat väriä');
-    }
+    let player = await PlayerController.getPlayer(msg.author.id);
+    if (!player) player = await PlayerController.createPlayer(msg.author.id);
+    player.color = color;
+
+    await player.save();
+
+    msg.reply(`Värisi vaihdettu \`${color}\``);
   }
 }

@@ -1,5 +1,5 @@
-const monsters = require('../monsters');
 const { MessageEmbed } = require('discord.js');
+const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'spawn',
@@ -10,13 +10,10 @@ module.exports = {
     const name = args[0];
     const isShiny = args[1];
 
-    if (!name) return msg.reply('Anna nekrumonin nimi!');
-    if (!Object.keys(monsters).includes(name)) return msg.reply('Viallinen nimi');
-
-    let monster = new monsters[name];
-    monster.level = Math.floor(Math.random() * 100);
-
-    if (isShiny) monster.isShiny = true;
+    let monster = Monsters.allMonsters.find(mon => mon.name.replace(" ", "").toLowerCase() === name.toLowerCase());
+    if (!monster) return msg.reply('Viallinen nimi');
+    monster.isShiny = isShiny ? 1 : 0;
+    monster.level = Monsters.getLevel();
 
     msg.client.currentMonster = monster;
 

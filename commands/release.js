@@ -1,40 +1,32 @@
-const fs = require('fs');
-const players = require('../players');
+const { MessageEmbed } = require('discord.js');
+const PlayerController = require('../controllers/PlayerController');
+const MonsterController = require('../controllers/MonsterController');
+const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'release',
   description: 'Release monster',
-  execute(msg, args) {
-    const number = args[0];
+  async execute(msg, args) {
+    const number = parseInt(args[0]);
     if (number) {
-      let player = players.find(player => player.id === msg.author.id);
-      if (player) {
-        if (player.active === number) player.active = 0;
-        const monster = player.monsters[number];
-        if (monster) {
-          player.monsters.splice(number, 1)
-          fs.writeFile('./players.json', JSON.stringify(players, null, 2), (err) => {
-            if (err) throw err;
-          });
+      if (!Number.isInteger(number)) return msg.reply('Antamasi arvo ei ole numero');
+      let player = await PlayerController.getPlayer(msg.author.id);
+      if (!player) return msg.reply('Sinulla ei ole yhtään monsteria!');
+      let monster = player.monsters.find(mon => mon.id === number);
+      if (!monster) return msg.reply('Antamallasi IDllä ei ole monsteria!');
+      Object.assign(monster, Monsters.allMonsters.find(mon => mon.id === monster.monsterId));
+      await MonsterController.deleteMonster(number);
 
-          const messages = [
-            `Tapoit ${monster.name}monin ☠️`,
-            `Raiskasit ${monster.name}monin kuoliaaksi 😭`,
-            `Vapautit ${monster.name}monin turvallisesti takaisin luontoon 🤗`,
-            `Teloitit ${monster.name}monin 🗡️`,
-            `Leikkasit ${monster.name}monin nokareen irti 🍆`,
-            `Heitit ${monster.name}monin pois 👋`
-          ];
+      const messages = [
+        `Tapoit ${monster.name}monin ☠️`,
+        `Raiskasit ${monster.name}monin kuoliaaksi 😭`,
+        `Vapautit ${monster.name}monin turvallisesti takaisin luontoon 🤗`,
+        `Teloitit ${monster.name}monin 🗡️`,
+        `Leikkasit ${monster.name}monin nokareen irti 🍆`,
+        `Heitit ${monster.name}monin pois 👋`
+      ];
 
-          msg.reply(messages[Math.floor(Math.random() * messages.length)]);
-        }
-        else {
-          msg.reply('Antamallasi numerolla ei ole monsteria!');
-        }
-      }
-      else {
-        msg.reply('Sinulla ei ole yhtään monsteria!');
-      }
+      msg.reply(messages[Math.floor(Math.random() * messages.length)]);
     }
     else {
       msg.reply('Anna monsterin numero');

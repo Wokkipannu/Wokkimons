@@ -1,4 +1,4 @@
-const monsters = require('../monsters');
+const Monsters = require('../monsters/monsters');
 
 module.exports = class Spawner {
   constructor(dispatcher) {
@@ -13,29 +13,23 @@ module.exports = class Spawner {
   start() {
     console.log(`Monster spawner started with ${this.timer / 60000} minutes interval`);
     this.spawner = setInterval(() => {
-      this.monster = new monsters[Object.keys(monsters)[Math.floor(Math.random() * Object.keys(monsters).length)]];
-      this.monster.level = Math.floor(Math.random() * 100);
-
-      console.log(`Trying to spawn monster with rarity ${this.monster.rarity}`)
-
       this.isShiny = this.rollShiny();
-      console.log(`Shiny status: ${this.isShiny}`);
-
       this.rarity = this.randomizeRarity();
-      console.log(`Rolled rarity ${this.rarity}`);
-      if (this.monster.rarity === this.rarity) {
-        console.log(`Monster is of valid rarity`);
-        this.dispatcher.dispatch('spawn', this.monster);
-        console.log(`Monster spawn took ${this.timer / 60000} minutes`);
-        this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
-        console.log(`Next monster spawn in ${this.timer / 60000} minutes`);
-        this.stop();
-        this.start();
-      }
-      else {
-        console.log(`Rerolling because of invalid rarity`);
-        this.rerollMonster();
-      }
+
+      console.log(`Spawning monster...`);
+      console.log(`Shiny status: ${this.isShiny}`);
+      console.log(`Rarity: ${this.rarity}`);
+
+      if (this.rarity === 1) this.monster = Monsters.commonMonsters[Math.floor(Math.random() * Monsters.commonMonsters.length)];
+      else if (this.rarity === 2) this.monster = Monsters.uncommonMonsters[Math.floor(Math.random() * Monsters.uncommonMonsters.length)];
+      else if (this.rarity === 3) this.monster = Monsters.rareMonsters[Math.floor(Math.random() * Monsters.rareMonsters.length)];
+      this.monster.level = Monsters.getLevel();
+
+      console.log(`Spawning level ${this.monster.level} ${this.monster.name}mon. Spawn took ${this.timer / 60000} minutes.`);
+      this.dispatcher.dispatch('spawn', this.monster);
+      this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
+      this.stop();
+      this.start();
     }, this.timer);
   }
 
@@ -57,30 +51,6 @@ module.exports = class Spawner {
     else if (rarity === 20) {
       // Rare
       return 3;
-    }
-  }
-
-  rerollMonster() {
-    console.log(`Rerolling monster...`)
-    this.monster = new monsters[Object.keys(monsters)[Math.floor(Math.random() * Object.keys(monsters).length)]];
-    this.monster.level = Math.floor(Math.random() * 100);
-    this.attemptRespawn();
-  }
-
-  attemptRespawn() {
-    console.log(`Attemping respawn`);
-    if (this.monster.rarity === this.rarity) {
-      console.log(`Rarity matches now`);
-      this.dispatcher.dispatch('spawn', this.monster);
-      console.log(`Monster spawn took ${this.timer / 60000} minutes`);
-      this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
-      console.log(`Next monster spawn in ${this.timer / 60000} minutes`);
-      this.stop();
-      this.start();
-    }
-    else {
-      console.log(`Rarity does not match. Rerolling`);
-      this.rerollMonster();
     }
   }
 
