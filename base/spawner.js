@@ -56,7 +56,7 @@ module.exports = class Spawner {
 
   rollShiny() {
     let die = Math.floor(Math.random() * 100);
-    if (die === 100) return true;
-    else return false;
+    if (die === 100) return 1;
+    else return 0;
   }
 }
