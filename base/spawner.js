@@ -1,4 +1,5 @@
 const Monsters = require('../monsters/monsters');
+const winston = require('./utils/logger');
 
 module.exports = class Spawner {
   constructor(dispatcher, serverId, channelId) {
@@ -14,22 +15,22 @@ module.exports = class Spawner {
   }
 
   start() {
-    console.log(`Monster spawner started on server ${this.serverId} with ${this.timer / 60000} minutes interval`);
+    winston.info(`Monster spawner started on server ${this.serverId} with ${this.timer / 60000} minutes interval`);
     this.status = true;
     this.spawner = setInterval(() => {
       this.isShiny = this.rollShiny();
       this.rarity = this.randomizeRarity();
 
-      console.log(`Spawning monster...`);
-      console.log(`Shiny status: ${this.isShiny}`);
-      console.log(`Rarity: ${this.rarity}`);
+      winston.info(`Spawning monster...`);
+      winston.info(`Shiny status: ${this.isShiny}`);
+      winston.info(`Rarity: ${this.rarity}`);
 
       if (this.rarity === 1) this.monster = Monsters.commonMonsters[Math.floor(Math.random() * Monsters.commonMonsters.length)];
       else if (this.rarity === 2) this.monster = Monsters.uncommonMonsters[Math.floor(Math.random() * Monsters.uncommonMonsters.length)];
       else if (this.rarity === 3) this.monster = Monsters.rareMonsters[Math.floor(Math.random() * Monsters.rareMonsters.length)];
       this.monster.level = Monsters.getLevel();
 
-      console.log(`Spawning level ${this.monster.level} ${this.monster.name}mon on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
+      winston.info(`Spawning level ${this.monster.level} ${this.monster.name}mon on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
       this.dispatcher.dispatch('spawn', { monster: this.monster, serverId: this.serverId, channelId: this.channelId });
       this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
       this.stop();
@@ -48,7 +49,7 @@ module.exports = class Spawner {
 
   randomizeRarity() {
     const rarity = Math.floor(Math.random() * (20 - 1 + 1) + 1);
-    console.log(`Rolled ${rarity}`);
+    winston.info(`Rolled ${rarity}`);
     if (rarity >= 0 && rarity <= 13) {
       // Common
       return 1;
