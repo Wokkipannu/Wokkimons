@@ -60,6 +60,7 @@ const allMonsters = [
   {"id": 55, "name": "Jesus", "image": "https://i.imgur.com/ESeqPEC.png", "rarity": 1, "shinyImage": "https://i.imgur.com/ESeqPEC.png", "memberName": "Jesuksen"},
   {"id": 56, "name": "Cold Brew", "image": "https://i.imgur.com/GsJAKvS.png", "rarity": 2, "shinyImage": "https://i.imgur.com/GsJAKvS.png", "memberName": "Cold Brew:n"},
   {"id": 57, "name": "Klonkku", "image": "https://i.imgur.com/HlHzfsE.jpg", "rarity": 1, "shinyImage": "https://i.imgur.com/HlHzfsE.jpg", "memberName": "Klonkun"},
+  {"id": 58, "name": "Bean", "image": "https://i.imgur.com/QJjVCx6.gif", "rarity": 3, "shinyImage": "https://i.imgur.com/QJjVCx6.gif", "memberName": "Beanin"},
 ];
 
 const commonMonsters = allMonsters.filter(monster => monster.rarity === 1);
