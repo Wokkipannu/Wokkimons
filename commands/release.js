@@ -25,12 +25,12 @@ module.exports = {
       await MonsterController.deleteMonster(number); // Delete the monster by it's ID
       // All possible release messages
       const messages = [
-        `Tapoit ${monster.name}monin ☠️`,
-        `Raiskasit ${monster.name}monin kuoliaaksi 😭`,
-        `Vapautit ${monster.name}monin turvallisesti takaisin luontoon 🤗`,
-        `Teloitit ${monster.name}monin 🗡️`,
-        `Leikkasit ${monster.name}monin nokareen irti 🍆`,
-        `Heitit ${monster.name}monin pois 👋`
+        `Tapoit ${monster.memberName} ☠️`,
+        `Raiskasit ${monster.memberName} kuoliaaksi 😭`,
+        `Vapautit ${monster.memberName} turvallisesti takaisin luontoon 🤗`,
+        `Teloitit ${monster.memberName} 🗡️`,
+        `Leikkasit ${monster.memberName} nokareen irti 🍆`,
+        `Heitit ${monster.memberName} pois 👋`
       ];
       // Send the random message
       msg.reply(messages[Math.floor(Math.random() * messages.length)]);

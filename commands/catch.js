@@ -54,7 +54,7 @@ module.exports = {
         .setDescription(`Taso: **${currentMonster.level}**`)
         .setImage(currentMonster.image);
 
-      msg.reply(`Onneksi olkoon! Nappasit tason **${currentMonster.level}** **${currentMonster.name}monin**!`);
+      msg.reply(`Onneksi olkoon! Nappasit tason **${currentMonster.level}** **${currentMonster.memberName}**!`);
       msg.channel.send(embed);
 
       msg.client.currentMonster.set(msg.guild.id, '');
