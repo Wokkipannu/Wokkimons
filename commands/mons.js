@@ -21,13 +21,32 @@ module.exports = {
     if (!player) player = { userId: msg.author.id, monsters: [] }
     // Use players embed color or default if not defined
     let color = player.color || '#1e90ff';
+    // Loop through all player monsters
+    let mons = [];
+    player.monsters.forEach(monster => {
+      let mon = Monsters.allMonsters.find(m => m.id === monster.monsterId);
+      mons.push({
+        id: monster.id,
+        monsterId: mon.id,
+        level: monster.level,
+        name: mon.name,
+        rarity: mon.rarity,
+        isShiny: monster.isShiny
+      });
+    });
+    // Remove duplicates from mons
+    mons = mons.filter((mon, index, self) => self.findIndex(m => m.monsterId === mon.monsterId) === index)
+    // Sort the player monsters by their rarity to different rarity groups
+    const common = mons.filter(mon => mon.rarity === 1);
+    const uncommon = mons.filter(mon => mon.rarity === 2);
+    const rare = mons.filter(mon => mon.rarity === 3);
 
     let embed = new MessageEmbed()
       .setColor(color)
-      .setTitle(`${msg.author.username} Wokkimondex`);
-      embed.addField('Common', Monsters.commonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField('Uncommon', Monsters.uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField('Rare', Monsters.rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
+      .setTitle(`${msg.author.username} » Collection`);
+      embed.addField(`Common (${common.length}/${Monsters.commonMonsters.length})`, Monsters.commonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField(`Uncommon (${uncommon.length}/${Monsters.uncommonMonsters.length})`, Monsters.uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField(`Rare (${rare.length}/${Monsters.rareMonsters.length})`, Monsters.rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
 
     msg.channel.send(embed); 
   }
