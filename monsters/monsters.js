@@ -31,7 +31,7 @@ const allMonsters = [
   {"id": 26, "name": "Tallapeli", "image": "https://i.imgur.com/tkxd5f8.png", "rarity": 1, "shinyImage": "https://i.imgur.com/tkxd5f8.png", "memberName": "Tallapelin"},
   {"id": 27, "name": "Olli", "image": "https://i.imgur.com/ZsITuUy.png", "rarity": 2, "shinyImage": "https://i.imgur.com/ZsITuUy.png", "memberName": "Ollin"},
   {"id": 28, "name": "Gerhard", "image": "https://i.imgur.com/a71IZJk.jpg", "rarity": 2, "shinyImage": "https://i.imgur.com/a71IZJk.jpg", "memberName": "Gerhardin"},
-  {"id": 20, "name": "Göring", "image": "https://i.imgur.com/QnkB97h.png", "rarity": 2, "shinyImage": "https://i.imgur.com/QnkB97h.png", "memberName": "Göringin"},
+  {"id": 29, "name": "Göring", "image": "https://i.imgur.com/QnkB97h.png", "rarity": 2, "shinyImage": "https://i.imgur.com/QnkB97h.png", "memberName": "Göringin"},
   {"id": 30, "name": "Wabuu", "image": "https://i.imgur.com/GDERK1Z.png", "rarity": 2, "shinyImage": "https://i.imgur.com/GDERK1Z.png", "memberName": "Wabuun"},
   {"id": 31, "name": "Mamu", "image": "https://i.imgur.com/x8oa0zw.png", "rarity": 2, "shinyImage": "https://i.imgur.com/x8oa0zw.png", "memberName": "Mamun"},
   {"id": 32, "name": "Kiveskiertymä", "image": "https://i.imgur.com/8bwDN4d.jpg", "rarity": 2, "shinyImage": "https://i.imgur.com/8bwDN4d.jpg", "memberName": "Kiveskiertymän"},
