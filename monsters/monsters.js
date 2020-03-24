@@ -67,7 +67,7 @@ const uncommonMonsters = allMonsters.filter(monster => monster.rarity === 2);
 const rareMonsters = allMonsters.filter(monster => monster.rarity === 3);
 
 function getLevel() {
-  return Math.floor(Math.random() * 100);
+  return Math.floor(Math.random() * 101);
 }
 
 module.exports = {
