@@ -9,6 +9,8 @@ module.exports = {
   description: 'Change spawn timer',
   guildOnly: true,
   execute(msg, args) {
+    // If user is not Wokki#0001
+    if (msg.author.id !== '108299947257925632') return;
     // Interval argument
     const interval = args[0];
     // Find the spawner
