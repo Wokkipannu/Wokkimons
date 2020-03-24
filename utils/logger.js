@@ -8,7 +8,7 @@ const Winston = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'wokkibot.log' })
+    new winston.transports.File({ filename: 'bot.log' })
   ]
 });
 
