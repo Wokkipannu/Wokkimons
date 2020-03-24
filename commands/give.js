@@ -43,6 +43,6 @@ module.exports = {
     // Create a monster to the database
     await MonsterController.createMonster({ monsterId: monster.id, level: monster.level, isShiny: monster.isShiny, PlayerId: player.id });
 
-    msg.reply(`Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.name}` : monster.name}mon annettu pelaajalle ${receiver.username}`);
+    msg.reply(`Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.memberName}` : monster.memberName} annettu pelaajalle ${receiver.username}`);
   }
 }
