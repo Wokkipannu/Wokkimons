@@ -1,5 +1,5 @@
 const Monsters = require('../monsters/monsters');
-const winston = require('./utils/logger');
+const winston = require('../utils/logger');
 
 module.exports = class Spawner {
   constructor(dispatcher, serverId, channelId) {
