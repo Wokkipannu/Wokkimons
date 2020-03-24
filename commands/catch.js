@@ -9,7 +9,7 @@
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
-const winston = require('./utils/logger');
+const winston = require('../utils/logger');
 
 module.exports = {
   name: 'catch',
