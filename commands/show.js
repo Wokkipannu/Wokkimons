@@ -27,14 +27,14 @@ module.exports = {
     // Find the monster in question from players monsters
     // Assign the monster object with rest of the monster data from the Monsters array
     let monster = player.monsters.find(mon => mon.id === number);
-    Object.assign(monster, Monsters.allMonsters.find(mon => mon.id === monster.monsterId));
     if (!monster) return msg.reply('Antamallasi numerolla ei löytynyt monsteria');
+    let mon = Monsters.allMonsters.find(mon => mon.id === monster.monsterId);
 
     const embed = new MessageEmbed()
       .setColor(color)
-      .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${monster.name}` : monster.name}`)
+      .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${mon.name}` : mon.name}`)
       .setDescription(`Taso: **${monster.level}**`)
-      .setImage(monster.isShiny ? monster.shinyImage : monster.image)
+      .setImage(monster.isShiny ? mon.shinyImage : mon.image)
       .setFooter(`Napattu ${moment(monster.createdAt).format("DD.MM.YYYY HH.mm")}`);
 
     msg.channel.send(embed);
