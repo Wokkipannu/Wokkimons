@@ -19,7 +19,9 @@ module.exports = {
     if (!name) return msg.reply('Oikea muoto `addbio <name> <bio>`');
     if (!bio) return msg.reply('Oikea muoto `addbio <name> <bio>`');
 
-    let mon = await MonController.getMonByName(name);
+    let mons = await MonController.getAllMons();
+    let mon = mons.find(m => m.name.replace(' ', '').toLowerCase() === name.toLowerCase());
+    if (!mon) return msg.reply('Nimellä ei löytynyt monsteria');
     mon.description = bio;
     mon.save();
 
