@@ -6,6 +6,7 @@
 
 const ServerController = require('../controllers/ServerController');
 const dispatcher = require('../utils/dispatcher');
+const spawner = require('../base/spawner');
 const Dispatcher = new dispatcher();
 
 module.exports = {
@@ -16,9 +17,9 @@ module.exports = {
     // If the user does not have the MANAGE_CHANNELS permission
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');
     // Get the spawner from spawners collection
-    let spawner = msg.client.spawners.get(msg.guild.id);
+    let sp = msg.client.spawners.get(msg.guild.id);
     // If we didn't find a spawner
-    if (!spawner) {
+    if (!sp) {
       // Find the server from our database. If we don't have a server, the spawner
       // can not be started before a spawn channel has been defined.
       let server = await ServerController.getServer(msg.guild.id);
