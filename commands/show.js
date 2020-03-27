@@ -7,7 +7,6 @@
 
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
-const Monsters = require('../monsters/monsters');
 const moment = require('moment');
 
 module.exports = {
@@ -28,13 +27,12 @@ module.exports = {
     // Assign the monster object with rest of the monster data from the Monsters array
     let monster = player.monsters.find(mon => mon.id === number);
     if (!monster) return msg.reply('Antamallasi numerolla ei löytynyt monsteria');
-    let mon = Monsters.allMonsters.find(mon => mon.id === monster.monsterId);
 
     const embed = new MessageEmbed()
       .setColor(color)
-      .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${mon.name}` : mon.name}`)
-      .setDescription(`Taso: **${monster.level}**`)
-      .setImage(monster.isShiny ? mon.shinyImage : mon.image)
+      .setTitle(`Pelaajan ${msg.author.username} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`)
+      .setDescription(`Taso: **${monster.level}**\n*${monster.Mon.description}*`)
+      .setImage(monster.isShiny ? monster.Mon.shinyImage : monster.Mon.image)
       .setFooter(`Napattu ${moment(monster.createdAt).format("DD.MM.YYYY HH.mm")}`);
 
     msg.channel.send(embed);

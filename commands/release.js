@@ -6,7 +6,6 @@
 
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
-const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'release',
@@ -21,16 +20,15 @@ module.exports = {
       if (!player) return msg.reply('Sinulla ei ole yhtään monsteria!'); // Player does not have any monsters
       let monster = player.monsters.find(mon => mon.id === number); // Find the monster in question by it's id
       if (!monster) return msg.reply('Antamallasi IDllä ei ole monsteria!'); // User gave invalid ID, nothing to do
-      Object.assign(monster, Monsters.allMonsters.find(mon => mon.id === monster.monsterId)); // Assign the monster object to the object we fetched from database
       await MonsterController.deleteMonster(number); // Delete the monster by it's ID
       // All possible release messages
       const messages = [
-        `Tapoit ${monster.memberName} ☠️`,
-        `Raiskasit ${monster.memberName} kuoliaaksi 😭`,
-        `Vapautit ${monster.memberName} turvallisesti takaisin luontoon 🤗`,
-        `Teloitit ${monster.memberName} 🗡️`,
-        `Leikkasit ${monster.memberName} nokareen irti 🍆`,
-        `Heitit ${monster.memberName} pois 👋`
+        `Tapoit ${monster.Mon.memberName} ☠️`,
+        `Raiskasit ${monster.Mon.memberName} kuoliaaksi 😭`,
+        `Vapautit ${monster.Mon.memberName} turvallisesti takaisin luontoon 🤗`,
+        `Teloitit ${monster.Mon.memberName} 🗡️`,
+        `Leikkasit ${monster.Mon.memberName} nokareen irti 🍆`,
+        `Heitit ${monster.Mon.memberName} pois 👋`
       ];
       // Send the random message
       msg.reply(messages[Math.floor(Math.random() * messages.length)]);

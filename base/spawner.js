@@ -1,4 +1,5 @@
-const Monsters = require('../monsters/monsters');
+const Monsters = require('../utils/monsters');
+const MonController = require('../controllers/MonController');
 const winston = require('../utils/logger');
 
 module.exports = class Spawner {
@@ -17,7 +18,7 @@ module.exports = class Spawner {
   start() {
     winston.info(`Monster spawner started on server ${this.serverId} with ${this.timer / 60000} minutes interval`);
     this.status = true;
-    this.spawner = setInterval(() => {
+    this.spawner = setInterval(async () => {
       this.isShiny = this.rollShiny();
       this.rarity = this.randomizeRarity();
 
@@ -25,12 +26,13 @@ module.exports = class Spawner {
       winston.info(`Shiny status: ${this.isShiny}`);
       winston.info(`Rarity: ${this.rarity}`);
 
-      if (this.rarity === 1) this.monster = Monsters.commonMonsters[Math.floor(Math.random() * Monsters.commonMonsters.length)];
-      else if (this.rarity === 2) this.monster = Monsters.uncommonMonsters[Math.floor(Math.random() * Monsters.uncommonMonsters.length)];
-      else if (this.rarity === 3) this.monster = Monsters.rareMonsters[Math.floor(Math.random() * Monsters.rareMonsters.length)];
+      let mons = await MonController.getAllMons();
+      let monsters = mons.filter(m => m.rarity === this.rarity);
+      this.monster = monsters[Math.floor(Math.random() * monsters.length)];
       this.monster.level = Monsters.getLevel();
+      this.monster.isShiny = this.isShiny;
 
-      winston.info(`Spawning level ${this.monster.level} ${this.monster.name}mon on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
+      winston.info(`Spawning level ${this.monster.level} ${this.monster.name} on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
       this.dispatcher.dispatch('spawn', { monster: this.monster, serverId: this.serverId, channelId: this.channelId });
       this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
       this.stop();

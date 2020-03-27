@@ -19,34 +19,19 @@ module.exports = {
     if (!player) return msg.reply('Sinulla ei ole yhtään monsteria!');
     // Get the player embed color or use default if not defined
     let color = player.color || '#1e90ff';
-    // Create an empty mons array that we'll populate with the
-    // player monsters
-    let mons = [];
-    // Loop through all player monsters
-    player.monsters.forEach(monster => {
-      let mon = Monsters.allMonsters.find(m => m.id === monster.monsterId);
-      mons.push({
-        id: monster.id,
-        monsterId: mon.id,
-        level: monster.level,
-        name: mon.name,
-        rarity: mon.rarity,
-        isShiny: monster.isShiny
-      });
-    });
     // Sort the player monsters by their rarity to different rarity groups
-    const common = mons.filter(mon => mon.rarity === 1);
-    const uncommon = mons.filter(mon => mon.rarity === 2);
-    const rare = mons.filter(mon => mon.rarity === 3);
+    const common = player.monsters.filter(monster => monster.Mon.rarity === 1);
+    const uncommon = player.monsters.filter(monster => monster.Mon.rarity === 2);
+    const rare = player.monsters.filter(monster => monster.Mon.rarity === 3);
     // If we got a player (which should always exist if we got this far)
     // send their monsters embed to ther current channel
     if (player) {
       let embed = new MessageEmbed()
         .setColor(color)
-        .setTitle(`${msg.author.username} monsterit`);
-      if (common.length > 0) embed.addField('Common', `${common.map(mon => `\`${mon.id}\` Tason ${mon.level} ${mon.isShiny ? `⭐ ${mon.name}` : mon.name}`).join('\n')}`, true);
-      if (uncommon.length > 0) embed.addField('Uncommon', `${uncommon.map(mon => `\`${mon.id}\` Tason ${mon.level} ${mon.isShiny ? `⭐ ${mon.name}` : mon.name}`).join('\n')}`, true);
-      if (rare.length > 0) embed.addField('Rare', `${rare.map(mon => `\`${mon.id}\` Tason ${mon.level} ${mon.isShiny ? `⭐ ${mon.name}` : mon.name}`).join('\n')}`, true);
+        .setTitle(`${msg.author.username} » Monsterit`);
+      if (common.length > 0) embed.addField('Common', `${common.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
+      if (uncommon.length > 0) embed.addField('Uncommon', `${uncommon.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
+      if (rare.length > 0) embed.addField('Rare', `${rare.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
 
       msg.channel.send(embed);
     }

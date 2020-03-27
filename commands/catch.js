@@ -43,10 +43,10 @@ module.exports = {
 
       // Create the monster into the database and define it to the ID of
       // the user that we just found or created
-      await MonsterController.createMonster({ monsterId: currentMonster.id, level: currentMonster.level, isShiny: currentMonster.isShiny, PlayerId: player.id });
+      await MonsterController.createMonster({ MonId: currentMonster.id, level: currentMonster.level, isShiny: currentMonster.isShiny, PlayerId: player.id });
 
       // Log to file
-      winston.info(`${msg.author.tag} caught level ${currentMonster.level} ${currentMonster.name}mon ${currentMonster.isShiny ? '(Shiny)' : ''}`);
+      winston.info(`${msg.author.tag} caught level ${currentMonster.level} ${currentMonster.name} ${currentMonster.isShiny ? '(Shiny)' : ''}`);
 
       // Send congratulations text and embed to the channel
       const embed = new MessageEmbed()

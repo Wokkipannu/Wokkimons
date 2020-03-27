@@ -7,7 +7,7 @@
 
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
-const Monsters = require('../monsters/monsters');
+const MonController = require('../controllers/MonController');
 
 module.exports = {
   name: 'mons',
@@ -21,32 +21,25 @@ module.exports = {
     if (!player) player = { userId: msg.author.id, monsters: [] }
     // Use players embed color or default if not defined
     let color = player.color || '#1e90ff';
-    // Loop through all player monsters
-    let mons = [];
-    player.monsters.forEach(monster => {
-      let mon = Monsters.allMonsters.find(m => m.id === monster.monsterId);
-      mons.push({
-        id: monster.id,
-        monsterId: mon.id,
-        level: monster.level,
-        name: mon.name,
-        rarity: mon.rarity,
-        isShiny: monster.isShiny
-      });
-    });
+    let mons = [...player.monsters];
     // Remove duplicates from mons
-    mons = mons.filter((mon, index, self) => self.findIndex(m => m.monsterId === mon.monsterId) === index)
+    mons = mons.filter((mon, index, self) => self.findIndex(m => m.MonId === mon.MonId) === index)
     // Sort the player monsters by their rarity to different rarity groups
-    const common = mons.filter(mon => mon.rarity === 1);
-    const uncommon = mons.filter(mon => mon.rarity === 2);
-    const rare = mons.filter(mon => mon.rarity === 3);
+    const common = mons.filter(monster => monster.Mon.rarity === 1);
+    const uncommon = mons.filter(monster => monster.Mon.rarity === 2);
+    const rare = mons.filter(monster => monster.Mon.rarity === 3);
+    // Get all monsters and sort them by rarities
+    const Mons = await MonController.getAllMons();
+    const commonMonsters = Mons.filter(m => m.rarity === 1);
+    const uncommonMonsters = Mons.filter(m => m.rarity === 2);
+    const rareMonsters = Mons.filter(m => m.rarity === 3);
 
     let embed = new MessageEmbed()
       .setColor(color)
       .setTitle(`${msg.author.username} » Collection`);
-      embed.addField(`Common (${common.length}/${Monsters.commonMonsters.length})`, Monsters.commonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField(`Uncommon (${uncommon.length}/${Monsters.uncommonMonsters.length})`, Monsters.uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
-      embed.addField(`Rare (${rare.length}/${Monsters.rareMonsters.length})`, Monsters.rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.monsterId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
+      embed.addField(`Common (${common.length}/${commonMonsters.length})`, commonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.MonId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField(`Uncommon (${uncommon.length}/${uncommonMonsters.length})`, uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.MonId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
+      embed.addField(`Rare (${rare.length}/${rareMonsters.length})`, rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.MonId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
 
     msg.channel.send(embed); 
   }

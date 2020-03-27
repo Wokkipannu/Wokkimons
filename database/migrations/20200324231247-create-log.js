@@ -1,24 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Monsters', {
+    return queryInterface.createTable('Logs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      MonId: {
-        type: Sequelize.INTEGER
+      serverId: {
+        type: Sequelize.STRING
       },
-      PlayerId: {
-        type: Sequelize.INTEGER
-      },
-      level: {
-        type: Sequelize.INTEGER
-      },
-      isShiny: {
-        type: Sequelize.INTEGER
+      message: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Monsters');
+    return queryInterface.dropTable('Logs');
   }
 };

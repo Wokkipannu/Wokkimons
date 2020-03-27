@@ -14,13 +14,7 @@ class MonsterController {
   static async getMonster(monsterId) {
     try {
       const monster = await models.Monster.findOne({
-        where: { id: monsterId },
-        include: [
-          {
-            model: models.Player,
-            as: 'owner'
-          }
-        ]
+        where: { id: monsterId }
       });
       if (monster) return monster;
       else return false;
@@ -32,14 +26,7 @@ class MonsterController {
 
   static async getAllMonsters() {
     try {
-      const monsters = await models.Monster.findAll({
-        include: [
-          {
-            model: models.Player,
-            as: 'owner'
-          }
-        ]
-      });
+      const monsters = await models.Monster.findAll();
       return monsters;
     }
     catch(error) {

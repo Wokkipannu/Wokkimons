@@ -7,13 +7,14 @@
  */
 
 const { MessageEmbed } = require('discord.js');
-const Monsters = require('../monsters/monsters');
+const Monsters = require('../utils/monsters');
+const MonController = require('../controllers/MonController');
 
 module.exports = {
   name: 'spawn',
   description: 'Force spawn a monster',
   guildOnly: false,
-  execute(msg, args) {
+  async execute(msg, args) {
     // If user is not Wokki#0001
     if (msg.author.id !== '108299947257925632') return;
 
@@ -25,20 +26,21 @@ module.exports = {
 
     // If our channel is not a text channel (likely a dm), we'll check if
     // we have guildId and channelId arguments defined
-    if (message.channel.type !== 'text' && !guildId && !channelId) {
+    if (msg.channel.type !== 'text' && !guildId && !channelId) {
       return msg.reply('Spawnataksesi DM kautta monsterin, syötä myös kanavan ID `spawn <name> <shiny> <guild id> <channel id>`');
     }
 
     // Find the monster object from array with the given name argument
     // Give the monster object isShiny value 0 or 1 depending on isShiny argument
     // Randomize a level using the Monsters modules getLevel() function, randomizes between 0-99
-    let monster = Monsters.allMonsters.find(mon => mon.name.replace(" ", "").toLowerCase() === name.toLowerCase());
+    const monsters = await MonController.getAllMons();
+    let monster = monsters.find(mon => mon.name.replace(" ", "").toLowerCase() === name.toLowerCase());
     if (!monster) return msg.reply('Viallinen nimi');
     monster.isShiny = isShiny ? 1 : 0;
     monster.level = Monsters.getLevel();
 
     // If we received the message via DM
-    if (message.channel.type !== 'text') {
+    if (msg.channel.type !== 'text') {
       if (!guildId) return msg.reply('Guild ID puuttuu');
       if (!channelId) return msg.reply('Channel ID puuttuu');
 

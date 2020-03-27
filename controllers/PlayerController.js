@@ -18,7 +18,12 @@ class PlayerController {
         include: [
           {
             model: models.Monster,
-            as: 'monsters'
+            as: 'monsters',
+            include: [
+              {
+                model: models.Mon
+              }
+            ]
           }
         ]
       });

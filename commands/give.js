@@ -7,7 +7,7 @@
 
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
-const Monsters = require('../monsters/monsters');
+const MonController = require('../controllers/MonController');
 
 module.exports = {
   name: 'give',
@@ -31,7 +31,8 @@ module.exports = {
 
     // Make sure that the monster we've specified actually exists
     // and give it it's values
-    const monster = Monsters.allMonsters.find(mon => mon.name.replace(" ", "").toLowerCase() === name.toLowerCase());
+    const Monsters = await MonController.getAllMons();
+    const monster = Monsters.find(m => m.name.replace(" ", "").toLowerCase() === name.toLowerCase());
     if (!monster) return msg.reply('Invalid monster name');
     monster.level = level;
     monster.isShiny = isShiny ? 1 : 0;
@@ -41,7 +42,7 @@ module.exports = {
     if (!player) player = await PlayerController.createPlayer(receiver.id);
 
     // Create a monster to the database
-    await MonsterController.createMonster({ monsterId: monster.id, level: monster.level, isShiny: monster.isShiny, PlayerId: player.id });
+    await MonsterController.createMonster({ MonId: monster.id, level: monster.level, isShiny: monster.isShiny, PlayerId: player.id });
 
     msg.reply(`Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.memberName}` : monster.memberName} annettu pelaajalle ${receiver.username}`);
   }
