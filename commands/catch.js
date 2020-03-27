@@ -25,7 +25,7 @@ module.exports = {
     // User did not define a name for the monster
     if (!name) {
       winston.info(`${msg.author.tag} tried cathing monster without giving a name argument`);
-      return msg.reply(`Syötä nimi. Esimerkki catch ${usage}`);
+      return msg.reply(`Syötä nimi. Esimerkki catch ${this.usage}`);
     }
 
     // If we have a monster currently in the guild
