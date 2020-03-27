@@ -6,7 +6,6 @@
 
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
-const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'monsters',
