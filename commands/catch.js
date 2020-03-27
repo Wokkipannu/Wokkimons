@@ -50,11 +50,11 @@ module.exports = {
 
       // Send congratulations text and embed to the channel
       const embed = new MessageEmbed()
-        .setTitle(currentMonster.name)
+        .setTitle(currentMonster.isShiny ? `⭐ ${currentMonster.name}` : currentMonster.name)
         .setDescription(`Taso: **${currentMonster.level}**`)
         .setImage(currentMonster.image);
 
-      msg.reply(`Onneksi olkoon! Nappasit tason **${currentMonster.level}** **${currentMonster.memberName}**!`);
+      msg.reply(`Onneksi olkoon! Nappasit tason **${currentMonster.level}** **${currentMonster.isShiny ? `⭐ ${currentMonster.memberName}` : currentMonster.memberName}**!`);
       msg.channel.send(embed);
 
       msg.client.currentMonster.set(msg.guild.id, '');
