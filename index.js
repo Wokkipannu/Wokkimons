@@ -33,9 +33,8 @@ client.on('ready', async () => {
   // Find all servers and create monster spawner for all of them
   let servers = await ServerController.getAllServers();
   servers.forEach(server => {
-    if (server.spawnChannel) {
+    if (server.spawnChannel && server.spawnerStatus === 1) {
       const Spawner = new spawner(Dispatcher, server.serverId, server.spawnChannel);
-      Spawner.start();
       client.spawners.set(server.serverId, Spawner);
     }
   });
@@ -56,7 +55,7 @@ client.on('message', msg => {
   }
   catch(error) {
     winston.error(error);
-    msg.reply('Error when trying to execute command');
+    msg.reply('Komentoa suorittaessa tapahtui virhe');
   }
 });
 

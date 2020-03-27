@@ -14,6 +14,9 @@ module.exports = {
       spawnChannel: {
         type: Sequelize.STRING
       },
+      spawnerStatus: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -13,6 +13,8 @@ module.exports = {
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');
     // Get the spawner from spawners collection
     let spawner = msg.client.spawners.get(msg.guild.id);
+    // Find the server from our database
+    let server = await ServerController.getServer(msg.guild.id);
     // If we didn't find a spawner
     if (!spawner) {
       return msg.reply('Spawner ei ole päällä tai sitä ei ole olemassa. Käytä `start` komentoa.');
@@ -22,6 +24,8 @@ module.exports = {
     if (!spawner.getStatus()) return msg.reply('Spawner on jo pois päältä');
     else {
       spawner.stop();
+      server.spawnerStatus = 0;
+      server.save();
       msg.reply('Spawner otettiin pois päältä');
     }
   }

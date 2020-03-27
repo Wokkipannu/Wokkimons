@@ -33,6 +33,8 @@ module.exports = {
     const Spawner = new spawner(Dispatcher, msg.guild.id, channel.id);
     Spawner.start();
     msg.client.spawners.set(msg.guild.id, Spawner);
+    server.spawnerStatus = 1;
+    server.save();
 
     msg.reply(`Monsterien spawn kanava vaihdettu ${channel.name}`);
   }
