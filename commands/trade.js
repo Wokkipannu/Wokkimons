@@ -5,7 +5,6 @@
  */
 
 const PlayerController = require('../controllers/PlayerController');
-const Monsters = require('../monsters/monsters');
 
 module.exports = {
   name: 'trade',
@@ -32,6 +31,6 @@ module.exports = {
     // Find the monsters info that we just gave away so we can use it's name
     let m = Monsters.allMonsters.find(m => m.id === mon.monsterId);
 
-    msg.reply(`Annoit tason ${mon.level} ${m.memberName} pelaajalle ${receiver.username}`);
+    msg.reply(`Annoit tason ${mon.level} ${mon.Mon.memberName} pelaajalle ${receiver.username}`);
   }
 }
