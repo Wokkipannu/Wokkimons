@@ -106,3 +106,5 @@ dist
 players.json
 config.json
 database/config/config.json
+importMonsters.js
+connectMonsters.js

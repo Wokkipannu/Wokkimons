@@ -13,6 +13,18 @@ class MonsController {
     }
   }
 
+  static async getMonByName(name) {
+    try {
+      const mon = await models.Mon.findOne({
+        where: { name: name }
+      });
+      return mon;
+    }
+    catch(error) {
+      return error;
+    }
+  }
+
   static async getAllMons() {
     try {
       const mons = await models.Mon.findAll();
