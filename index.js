@@ -35,6 +35,7 @@ client.on('ready', async () => {
   servers.forEach(server => {
     if (server.spawnChannel && server.spawnerStatus === 1) {
       const Spawner = new spawner(Dispatcher, server.serverId, server.spawnChannel);
+      Spawner.start();
       client.spawners.set(server.serverId, Spawner);
     }
   });

@@ -4,6 +4,8 @@
  * Stop the spawner from spawning monsters
  */
 
+const ServerController = require('../controllers/ServerController');
+
 module.exports = {
   name: 'stop',
   description: 'Stop spawner',

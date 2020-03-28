@@ -30,7 +30,7 @@ module.exports = {
       msg.client.spawners.set(msg.guild.id, Spawner);
       server.spawnerStatus = 1;
       server.save();
-      msg.reply('Spawner käynnistetty');
+      return msg.reply('Spawner käynnistetty');
     }
     // If we found a spawner, but it's already on we'll send a message
     // Otherwise we'll start it
@@ -39,7 +39,7 @@ module.exports = {
       sp.start();
       server.spawnerStatus = 1;
       server.save();
-      msg.reply('Spawner käynnistetty');
+      return msg.reply('Spawner käynnistetty');
     }
   }
 }
