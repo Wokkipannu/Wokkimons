@@ -24,7 +24,7 @@ const config = require('./config');
 const ServerController = require('./controllers/ServerController');
 const spawner = require('./base/spawner');
 const dispatcher = require('./utils/dispatcher');
-const Dispatcher = new dispatcher();
+client.Dispatcher = new dispatcher();
 
 const winston = require('./utils/logger');
 
@@ -34,7 +34,7 @@ client.on('ready', async () => {
   let servers = await ServerController.getAllServers();
   servers.forEach(server => {
     if (server.spawnChannel && server.spawnerStatus === 1) {
-      const Spawner = new spawner(Dispatcher, server.serverId, server.spawnChannel);
+      const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
       Spawner.start();
       client.spawners.set(server.serverId, Spawner);
     }
@@ -64,7 +64,7 @@ client.login(config.TOKEN);
 
 client.currentMonster;
 // On spawn handles sending the monster spawns to the servers
-Dispatcher.on('spawn', data => {
+client.Dispatcher.on('spawn', data => {
   client.currentMonster.set(data.serverId, data.monster);
 
   const guild = client.guilds.cache.find(g => g.id === data.serverId);
