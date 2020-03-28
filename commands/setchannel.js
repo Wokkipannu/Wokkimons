@@ -8,7 +8,6 @@
 const ServerController = require('../controllers/ServerController');
 const dispatcher = require('../utils/dispatcher');
 const spawner = require('../base/spawner');
-const Dispatcher = new dispatcher();
 
 module.exports = {
   name: 'setchannel',
@@ -30,7 +29,7 @@ module.exports = {
     // Assign the spawner and start it
     let sp = msg.client.spawners.get(msg.guild.id);
     if (sp) sp.stop();
-    const Spawner = new spawner(Dispatcher, msg.guild.id, channel.id);
+    const Spawner = new spawner(client.Dispatcher, msg.guild.id, channel.id);
     Spawner.start();
     msg.client.spawners.set(msg.guild.id, Spawner);
     server.spawnerStatus = 1;
