@@ -7,7 +7,6 @@
 const ServerController = require('../controllers/ServerController');
 const dispatcher = require('../utils/dispatcher');
 const spawner = require('../base/spawner');
-const Dispatcher = new dispatcher();
 
 module.exports = {
   name: 'start',
@@ -25,7 +24,7 @@ module.exports = {
       // can not be started before a spawn channel has been defined.
       if (!server || !server.spawnChannel) return msg.reply('Sinun tulee asettaa spawn kanava ensin käyttämällä `setchannel` komentoa');
       // Create a new spawner, start it and assign it to the spawners collection
-      const Spawner = new spawner(Dispatcher, server.serverId, server.spawnChannel);
+      const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
       Spawner.start();
       msg.client.spawners.set(msg.guild.id, Spawner);
       server.spawnerStatus = 1;
