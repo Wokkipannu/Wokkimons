@@ -37,20 +37,23 @@ module.exports = {
     // If we got a player (which should always exist if we got this far)
     // send their monsters embed to ther current channel
     if (player) {
+      let num = parseInt(args[0]);
+      if (!num) num = 1;
+      if (!Number.isInteger(num)) return msg.reply('Arvon tulee olla numero');
+      if (num < 1) return msg.reply('Arvon tulee olla vähintään 1');
+
+      let c = common.slice((num - 1) * 25, 25 * num);
+      let uc = uncommon.slice((num - 1) * 25, 25 * num);
+      let r = rare.slice((num - 1) * 25, 25 * num);
+
       let embed = new MessageEmbed()
         .setColor(color)
-        .setTitle(`${msg.author.username} » Monsterit`);
-      if (common.length > 0) embed.addField('Common', `${common.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
-      if (uncommon.length > 0) embed.addField('Uncommon', `${uncommon.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
-      if (rare.length > 0) embed.addField('Rare', `${rare.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
+        .setTitle(`${msg.author.username} » Monsterit sivu ${num}`);
+      if (c.length > 0) embed.addField('Common', `${c.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
+      if (uc.length > 0) embed.addField('Uncommon', `${uc.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
+      if (r.length > 0) embed.addField('Rare', `${r.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
 
-      if (args[0] === 'dm') {
-        msg.author.send(embed);
-        msg.delete();
-      }
-      else {
-        msg.channel.send(embed);
-      }
+      msg.channel.send(embed);
     }
     else {
       msg.reply('Sinulla ei ole näytettäviä monstereita. Yritä napata sellainen.');
