@@ -32,7 +32,11 @@ module.exports = {
       if (uncommon.length > 0) embed.addField('Uncommon', `${uncommon.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
       if (rare.length > 0) embed.addField('Rare', `${rare.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
 
-      msg.channel.send(embed);
+      if (args[0] === 'show') msg.channel.send(embed);
+      else {
+        msg.author.send(embed);
+        msg.delete();
+      }
     }
     else {
       msg.reply('Sinulla ei ole näytettäviä monstereita. Yritä napata sellainen.');

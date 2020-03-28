@@ -41,6 +41,10 @@ module.exports = {
       embed.addField(`Uncommon (${uncommon.length}/${uncommonMonsters.length})`, uncommonMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.MonId === mon.id) ? '✅' : '❌'}`).join('\n'), true)
       embed.addField(`Rare (${rare.length}/${rareMonsters.length})`, rareMonsters.map(mon => `${mon.name} ${player.monsters.find(monster => monster.MonId === mon.id) ? '✅' : '❌'}`).join('\n'), true);
 
-    msg.channel.send(embed); 
+    if (args[0] === 'show') msg.channel.send(embed);
+    else {
+      msg.author.send(embed);
+      msg.delete();
+    }
   }
 }
