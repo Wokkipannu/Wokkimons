@@ -19,9 +19,21 @@ module.exports = {
     // Get the player embed color or use default if not defined
     let color = player.color || '#1e90ff';
     // Sort the player monsters by their rarity to different rarity groups
-    const common = player.monsters.filter(monster => monster.Mon.rarity === 1);
-    const uncommon = player.monsters.filter(monster => monster.Mon.rarity === 2);
-    const rare = player.monsters.filter(monster => monster.Mon.rarity === 3);
+    const common = player.monsters.filter(monster => monster.Mon.rarity === 1).sort((a, b) => {
+      let textA = a.Mon.name.toUpperCase();
+      let textB = b.Mon.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    const uncommon = player.monsters.filter(monster => monster.Mon.rarity === 2).sort((a, b) => {
+      let textA = a.Mon.name.toUpperCase();
+      let textB = b.Mon.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    const rare = player.monsters.filter(monster => monster.Mon.rarity === 3).sort((a, b) => {
+      let textA = a.Mon.name.toUpperCase();
+      let textB = b.Mon.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
     // If we got a player (which should always exist if we got this far)
     // send their monsters embed to ther current channel
     if (player) {

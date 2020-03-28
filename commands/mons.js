@@ -30,9 +30,22 @@ module.exports = {
     const rare = mons.filter(monster => monster.Mon.rarity === 3);
     // Get all monsters and sort them by rarities
     const Mons = await MonController.getAllMons();
-    const commonMonsters = Mons.filter(m => m.rarity === 1);
-    const uncommonMonsters = Mons.filter(m => m.rarity === 2);
-    const rareMonsters = Mons.filter(m => m.rarity === 3);
+    const commonMonsters = Mons.filter(m => m.rarity === 1).sort((a, b) => {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    const uncommonMonsters = Mons.filter(m => m.rarity === 2).sort((a, b) => {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    const rareMonsters = Mons.filter(m => m.rarity === 3).sort((a, b) => {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+
 
     let embed = new MessageEmbed()
       .setColor(color)
@@ -48,5 +61,5 @@ module.exports = {
     else {
       msg.channel.send(embed);
     }
-  }
+  },
 }
