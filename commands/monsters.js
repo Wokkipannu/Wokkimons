@@ -32,10 +32,12 @@ module.exports = {
       if (uncommon.length > 0) embed.addField('Uncommon', `${uncommon.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
       if (rare.length > 0) embed.addField('Rare', `${rare.map(monster => `\`${monster.id}\` Tason ${monster.level} ${monster.isShiny ? `⭐ ${monster.Mon.name}` : monster.Mon.name}`).join('\n')}`, true);
 
-      if (args[0] === 'show') msg.channel.send(embed);
-      else {
+      if (args[0] === 'dm') {
         msg.author.send(embed);
         msg.delete();
+      }
+      else {
+        msg.channel.send(embed);
       }
     }
     else {
