@@ -34,9 +34,9 @@ module.exports = {
     }
     // If we found a spawner, but it's already on we'll send a message
     // Otherwise we'll start it
-    if (spawner.getStatus()) return msg.reply('Spawner on jo päällä');
+    if (sp.getStatus()) return msg.reply('Spawner on jo päällä');
     else {
-      spawner.start();
+      sp.start();
       server.spawnerStatus = 1;
       server.save();
       msg.reply('Spawner käynnistetty');
