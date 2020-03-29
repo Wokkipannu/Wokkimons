@@ -30,9 +30,10 @@ module.exports = {
       arg = parseInt(arg);
       let mon = player.monsters.find(m => m.id === arg);
       if (mon) {
-        if (!previous) previous = mon;
         if (previous && previous.Mon.name !== mon.Mon.name) return;
+        if (previous && previous.id === mon.id) return;
         else monsters.push(mon);
+        previous = mon;
       }
     });
     if (monsters.length !== 10) return msg.reply('Varmista, että kaikki antamasi monsterit ovat samoja monstereita');
