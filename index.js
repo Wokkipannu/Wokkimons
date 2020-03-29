@@ -85,3 +85,7 @@ client.Dispatcher.on('spawn', data => {
       winston.error(error);
     });
 });
+
+// Start cron
+const cron = require('./utils/cron');
+cron.start(client);
