@@ -4,6 +4,8 @@
  * A monster collecting game in Discord
  */
 
+require('dotenv').config()
+
 const Discord = require('discord.js');
 const { MessageEmbed } = require('discord.js');
 const client = new Discord.Client();
@@ -18,8 +20,6 @@ for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 }
-
-const config = require('./config');
 
 const ServerController = require('./controllers/ServerController');
 const spawner = require('./base/spawner');
@@ -42,9 +42,9 @@ client.on('ready', async () => {
 });
 // Handle messages
 client.on('message', msg => {
-  if (!msg.content.startsWith(config.PREFIX) || msg.author.bot) return;
+  if (!msg.content.startsWith(process.env.PREFIX) || msg.author.bot) return;
 
-  const args = msg.content.slice(config.PREFIX.length).split(/ +/);
+  const args = msg.content.slice(process.env.PREFIX.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
   winston.info(`User ${msg.author.tag} tried running command ${command} with args ${args.join(", ")}`);
@@ -60,7 +60,7 @@ client.on('message', msg => {
   }
 });
 
-client.login(config.TOKEN);
+client.login(process.env.TOKEN);
 
 client.currentMonster;
 // On spawn handles sending the monster spawns to the servers
