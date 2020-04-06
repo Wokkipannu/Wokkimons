@@ -6,13 +6,34 @@ module.exports = class Spawner {
   constructor(dispatcher, serverId, channelId) {
     this.spawner;
     this.monster;
-    this.dispatcher = dispatcher;
-    this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
     this.rarity;
     this.isShiny;
+    this.status;
+    this.min;
+    this.max;
+    this.dispatcher = dispatcher;
     this.serverId = serverId;
     this.channelId = channelId;
-    this.status;
+    this.timer;
+  }
+
+  init() {
+    const spawnerInterval = process.env.SPAWNER_INTERVAL.split("-");
+    this.min = parseInt(spawnerInterval[0]) * 60000;
+    this.max = parseInt(spawnerInterval[1]) * 60000;
+
+    if (!Number.isInteger(this.min) || !Number.isInteger(this.max) || this.min >= this.max || this.min < 1 || this.max < 2) {
+      this.initDefault();
+    }
+
+    this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+  }
+
+  initDefault() {
+    winston.error('Invalid SPAWNER_INTERVAL environment value. Expected value is min-max, example 5-30. Using default value instead.');
+    this.min = 300000;
+    this.max = 1800000;
+    this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
   }
 
   start() {
@@ -34,7 +55,7 @@ module.exports = class Spawner {
 
       winston.info(`Spawning level ${this.monster.level} ${this.monster.name} on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
       this.dispatcher.dispatch('spawn', { monster: this.monster, serverId: this.serverId, channelId: this.channelId });
-      this.timer = Math.floor(Math.random() * (1800000 - 300000 + 1) + 300000);
+      this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
       this.stop();
       this.start();
     }, this.timer);
