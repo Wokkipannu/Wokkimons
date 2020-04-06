@@ -30,6 +30,7 @@ module.exports = {
     let sp = msg.client.spawners.get(msg.guild.id);
     if (sp) sp.stop();
     const Spawner = new spawner(client.Dispatcher, msg.guild.id, channel.id);
+    Spawner.init();
     Spawner.start();
     msg.client.spawners.set(msg.guild.id, Spawner);
     server.spawnerStatus = 1;
