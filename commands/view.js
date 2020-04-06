@@ -11,6 +11,7 @@ module.exports = {
   name: 'view',
   description: 'View a specific monster',
   guildOnly: false,
+  permissions: 'admin',
   async execute(msg, args) {
     const name = args.join(' ').toLowerCase();
     if (!name) return msg.reply('Oikea muoto `view <name>`');

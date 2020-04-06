@@ -8,15 +8,14 @@
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
 const MonController = require('../controllers/MonController');
+const Groups = require('../groups');
 
 module.exports = {
   name: 'give',
   description: 'Give a monster',
   guildOnly: true,
+  permissions: 'owner',
   async execute(msg, args) {
-    // If user is not Wokki#0001
-    if (msg.author.id !== '108299947257925632') return;
-
     // Arguments
     const name = args[0];
     const level = parseInt(args[1]);

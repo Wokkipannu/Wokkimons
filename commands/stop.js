@@ -10,6 +10,7 @@ module.exports = {
   name: 'stop',
   description: 'Stop spawner',
   guildOnly: true,
+  permissions: 'owner',
   async execute(msg, args) {
     // If the user does not have the MANAGE_CHANNELS permission
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');

@@ -28,13 +28,17 @@ client.Dispatcher = new dispatcher();
 
 const winston = require('./utils/logger');
 
+const Groups = require('./groups');
+
 client.on('ready', async () => {
   winston.info(`Logged in as ${client.user.tag}!`);
+  client.user.setActivity('wokkimon.xyz', { type: 'PLAYING' })
   // Find all servers and create monster spawner for all of them
   let servers = await ServerController.getAllServers();
   servers.forEach(server => {
     if (server.spawnChannel && server.spawnerStatus === 1) {
       const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
+      Spawner.init();
       Spawner.start();
       client.spawners.set(server.serverId, Spawner);
     }
@@ -45,20 +49,28 @@ client.on('message', msg => {
   if (!msg.content.startsWith(process.env.PREFIX) || msg.author.bot) return;
 
   const args = msg.content.slice(process.env.PREFIX.length).split(/ +/);
-  const command = args.shift().toLowerCase();
+  const commandName = args.shift().toLowerCase();
+  const command = client.commands.get(commandName);
+  if (!command) return;
 
   winston.info(`User ${msg.author.tag} tried running command ${command} with args ${args.join(", ")}`);
 
-  if (!client.commands.has(command)) return;
-  if (command.guildOnly && message.channel.type !== 'text') return msg.reply('Komento toimii vain servereillä');
+  if (command.guildOnly && msg.channel.type !== 'text') return msg.reply('Komento toimii vain servereillä');
+  if (command.permissions) {
+    if (!Groups[command.permissions].find(u => u.id === msg.author.id)) {
+      return msg.reply('Sinulla ei ole tarvittavia oikeuksia suorittaa tätä komentoa');
+    }
+  }
   try {
-    client.commands.get(command).execute(msg, args);
+    command.execute(msg, args);
   }
   catch(error) {
     winston.error(error);
     msg.reply('Komentoa suorittaessa tapahtui virhe');
   }
 });
+
+client.on('error', winston.error);
 
 client.login(process.env.TOKEN);
 

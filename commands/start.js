@@ -12,6 +12,7 @@ module.exports = {
   name: 'start',
   description: 'Start spawner',
   guildOnly: true,
+  permissions: 'owner',
   async execute(msg, args) {
     // If the user does not have the MANAGE_CHANNELS permission
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');
@@ -25,6 +26,7 @@ module.exports = {
       if (!server || !server.spawnChannel) return msg.reply('Sinun tulee asettaa spawn kanava ensin käyttämällä `setchannel` komentoa');
       // Create a new spawner, start it and assign it to the spawners collection
       const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
+      Spawner.init();
       Spawner.start();
       msg.client.spawners.set(msg.guild.id, Spawner);
       server.spawnerStatus = 1;

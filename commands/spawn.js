@@ -9,20 +9,21 @@
 const { MessageEmbed } = require('discord.js');
 const Monsters = require('../utils/monsters');
 const MonController = require('../controllers/MonController');
+const Groups = require('../groups');
 
 module.exports = {
   name: 'spawn',
   description: 'Force spawn a monster',
   guildOnly: false,
+  permissions: 'owner',
   async execute(msg, args) {
-    // If user is not Wokki#0001
-    if (msg.author.id !== '108299947257925632') return;
-
     // Arguments
     const name = args[0];
     const isShiny = args[1];
     const guildId = args[2];
     const channelId = args[3];
+
+    if (!name) return 'Oikea muoto `give <name> <shiny>`';
 
     // If our channel is not a text channel (likely a dm), we'll check if
     // we have guildId and channelId arguments defined
