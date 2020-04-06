@@ -28,8 +28,6 @@ module.exports = {
     // Change the monsters PalyerId to the receiving players ID and save it
     mon.PlayerId = receivingPlayer.id;
     mon.save();
-    // Find the monsters info that we just gave away so we can use it's name
-    let m = Monsters.allMonsters.find(m => m.id === mon.monsterId);
 
     msg.reply(`Annoit tason ${mon.level} ${mon.Mon.memberName} pelaajalle ${receiver.username}`);
   }
