@@ -32,7 +32,7 @@ const Groups = require('./groups');
 
 client.on('ready', async () => {
   winston.info(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity('wokkimon.xyz', { type: 'PLAYING' })
+  client.user.setActivity(`on ${client.guilds.cache.size} servers`, { type: 'PLAYING' });
   // Find all servers and create monster spawner for all of them
   let servers = await ServerController.getAllServers();
   servers.forEach(server => {
@@ -69,8 +69,9 @@ client.on('message', msg => {
     msg.reply('Komentoa suorittaessa tapahtui virhe');
   }
 });
-
 client.on('error', winston.error);
+client.on('guildCreate', () => client.user.setActivity(`on ${client.guilds.cache.size} servers`, { type: 'PLAYING' }));
+client.on('guildDelete', () => client.user.setActivity(`on ${client.guilds.cache.size} servers`, { type: 'PLAYING' }));
 
 client.login(process.env.TOKEN);
 
