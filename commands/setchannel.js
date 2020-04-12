@@ -5,15 +5,21 @@
  * A spawn channel is required for the bot to function properly
  */
 
+const Command = require('../base/command');
 const ServerController = require('../controllers/ServerController');
-const dispatcher = require('../utils/dispatcher');
 const spawner = require('../base/spawner');
 
-module.exports = {
-  name: 'setchannel',
-  usage: '<#kanava>',
-  guildOnly: true,
-  description: 'Set monster spawn channel',
+module.exports = class SetChannelCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'setchannel',
+      guildOnly: true,
+      description: 'Vaihda monsterin spawni kanava',
+      extendedDescription: 'Määrittää monstereille spawni kanavan ja aloittaa spawner ajastimen',
+      usage: '<#kanava>'
+    })
+  }
+
   async execute(msg, args) {
     // Make sure that the user has the MANAGE_CHANNELS permission
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');
@@ -27,12 +33,12 @@ module.exports = {
     // Save the server
     await server.save();
     // Assign the spawner and start it
-    let sp = msg.client.spawners.get(msg.guild.id);
+    let sp = this.client.spawners.get(msg.guild.id);
     if (sp) sp.stop();
-    const Spawner = new spawner(client.Dispatcher, msg.guild.id, channel.id);
+    const Spawner = new spawner(this.client.Dispatcher, msg.guild.id, channel.id);
     Spawner.init();
     Spawner.start();
-    msg.client.spawners.set(msg.guild.id, Spawner);
+    this.client.spawners.set(msg.guild.id, Spawner);
     server.spawnerStatus = 1;
     server.save();
 

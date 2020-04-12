@@ -4,13 +4,21 @@
  * Release a monster back to the wild (or slay them brutally at random)
  */
 
+const Command = require('../base/command');
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
 
-module.exports = {
-  name: 'release',
-  description: 'Release monster',
-  guildOnly: false,
+module.exports = class ReleaseCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'release',
+      guildOnly: false,
+      description: 'Vapauta monsteri',
+      extendedDescription: 'Poistaa monsterin luettelostasi lopullisesti',
+      usage: '<monsterin id>'
+    })
+  }
+
   async execute(msg, args) {
     // Get the number argument and parse it
     const number = parseInt(args[0]);

@@ -5,16 +5,24 @@
  * with defined level and shiny status to a user.
  */
 
+const Command = require('../base/command');
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
 const MonController = require('../controllers/MonController');
 const Groups = require('../groups');
 
-module.exports = {
-  name: 'give',
-  description: 'Give a monster',
-  guildOnly: true,
-  permissions: 'owner',
+module.exports = class GiveCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'give',
+      guildOnly: true,
+      description: 'Antaa monsterin pelaajalle',
+      extendedDescription: 'Antaa monsteirn halutulla tasolla ja shiny statuksella tägätylle pelaajalle',
+      usage: '<monsterin nimi> <taso> <shiny true/false> <vastaanottaja>',
+      permissions: 'owner'
+    });
+  }
+
   async execute(msg, args) {
     // Arguments
     const name = args[0];

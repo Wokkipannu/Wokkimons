@@ -5,14 +5,22 @@
  * the monsters name, shiny status, level and image.
  */
 
+const Command = require('../base/command');
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 const moment = require('moment');
 
-module.exports = {
-  name: 'show',
-  description: 'Show a monster',
-  guildOnly: false,
+module.exports = class ShowCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'show',
+      guildOnly: false,
+      description: 'Näytä monsterisi',
+      extendedDescription: 'Luo embedin luettelossasi olevasta monsterista joka näyttää sen tason, kuvan ja shiny statuksen',
+      usage: '<monsterin id>'
+    })
+  }
+
   async execute(msg, args) {
     // Get the number from arguments
     const number = parseInt(args[0]);

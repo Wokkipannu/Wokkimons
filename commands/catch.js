@@ -6,21 +6,28 @@
  * by manually spawning a monster on the guild channel.
  */
 
+const Command = require('../base/command');
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
 const winston = require('../utils/logger');
 
-module.exports = {
-  name: 'catch',
-  usage: '<nimi>',
-  description: 'Nappaa monsteri',
-  guildOnly: true,
+module.exports = class CatchCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'catch',
+      guildOnly: true,
+      description: 'Nappaa monsteri',
+      extendedDescription: 'Nappaa viimeisin monsteri arvaamalla sen nimi',
+      usage: '<nimi>'
+    });
+  }
+
   async execute(msg, args) {
     // Join all arguments together so we can use spaces in monster names
     // Fetch the current monster from currentMonster collector
     const name = args.join(' ');
-    const currentMonster = msg.client.currentMonster.get(msg.guild.id);
+    const currentMonster = this.client.currentMonster.get(msg.guild.id);
 
     // User did not define a name for the monster
     if (!name) {
@@ -54,9 +61,9 @@ module.exports = {
         .setDescription(`Taso: **${currentMonster.level}**`)
         .setImage(currentMonster.isShiny ? currentMonster.shinyImage : currentMonster.image);
 
-      msg.reply(`Onneksi olkoon! Nappasit tason **${currentMonster.level}** **${currentMonster.isShiny ? `⭐ ${currentMonster.memberName}` : currentMonster.memberName}**!`, { embed: embed });
+      msg.channel.send(`Onneksi olkoon, ${msg.author}! Nappasit tason **${currentMonster.level}** **${currentMonster.isShiny ? `⭐ ${currentMonster.memberName}` : currentMonster.memberName}**!`, { embed: embed });
 
-      msg.client.currentMonster.set(msg.guild.id, '');
+      this.client.currentMonster.set(msg.guild.id, '');
     }
     // User tried to catch a monster, but one does not exist
     // Technically this should never be possible

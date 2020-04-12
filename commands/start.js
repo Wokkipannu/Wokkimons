@@ -4,20 +4,26 @@
  * Start the spawner
  */
 
+const Command = require('../base/command');
 const ServerController = require('../controllers/ServerController');
-const dispatcher = require('../utils/dispatcher');
 const spawner = require('../base/spawner');
 
-module.exports = {
-  name: 'start',
-  description: 'Start spawner',
-  guildOnly: true,
-  permissions: 'owner',
+module.exports = class StartCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'start',
+      guildOnly: true,
+      description: 'Alottaa monster spawner ajastimen',
+      extendedDescription: 'Alottaa monster spawner ajastimen tai luo sen jos sitä ei ollut olemassa',
+      permissions: 'owner'
+    })
+  }
+
   async execute(msg, args) {
     // If the user does not have the MANAGE_CHANNELS permission
     if (!msg.member.permissions.has('MANAGE_CHANNELS')) return msg.reply('Sinulta puuttuu MANAGE_CHANNELS oikeus');
     // Get the spawner from spawners collection
-    let sp = msg.client.spawners.get(msg.guild.id);
+    let sp = this.client.spawners.get(msg.guild.id);
     // Find the server from our database
     let server = await ServerController.getServer(msg.guild.id);
     // If we didn't find a spawner
@@ -28,7 +34,7 @@ module.exports = {
       const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
       Spawner.init();
       Spawner.start();
-      msg.client.spawners.set(msg.guild.id, Spawner);
+      this.client.spawners.set(msg.guild.id, Spawner);
       server.spawnerStatus = 1;
       server.save();
       return msg.reply('Spawner käynnistetty');

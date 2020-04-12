@@ -5,14 +5,22 @@
  * display users progress on catching them all
  */
 
+const Command = require('../base/command');
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 const MonController = require('../controllers/MonController');
 
-module.exports = {
-  name: 'mons',
-  description: 'Display all possible monsters',
-  guildOnly: false,
+module.exports = class MonsCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'mons',
+      guildOnly: false,
+      description: 'Listaa monsterit ja progressin',
+      extendedDescription: 'Näyttää listan kaikista monstereista ja kuinka monta olet napannut mistäkin kategoriasta',
+      usage: '<dm : valinnainen>'
+    });
+  }
+
   async execute(msg, args) {
     // Find player from the database
     // If we did not find the player, we'll create a fake player object so we can
@@ -61,5 +69,5 @@ module.exports = {
     else {
       msg.channel.send(embed);
     }
-  },
+  }
 }

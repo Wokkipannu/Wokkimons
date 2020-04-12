@@ -4,12 +4,20 @@
  * Give a monster to another player. The other user has no way to refuse.
  */
 
+const Command = require('../base/command');
 const PlayerController = require('../controllers/PlayerController');
 
-module.exports = {
-  name: 'trade',
-  guildOnly: true,
-  description: 'Trade a monster',
+module.exports = class TradeCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'trade',
+      guildOnly: true,
+      description: 'Anna monsteri toiselle pelaajalle',
+      extendedDescription: 'Anna haluamasi monsteri toiselle pelaajalle',
+      usage: '<vastaanottaja> <monsterin id>'
+    })
+  }
+
   async execute(msg, args) {
     // Arguments
     const receiver = msg.mentions.users.first();

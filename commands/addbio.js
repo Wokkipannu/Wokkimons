@@ -5,13 +5,20 @@
  */
 
 const MonController = require('../controllers/MonController');
-const Groups = require('../groups');
+const Command = require('../base/command');
 
-module.exports = {
-  name: 'addbio',
-  description: 'Add bio to a monster',
-  guildOnly: false,
-  permissions: 'admin',
+module.exports = class AddBioCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'addbio',
+      description: 'Lisää monsterille bio',
+      extendedDescription: 'Lisää show ja view komentoa käytettäessä näkyvän bion. Jos monsterin nimessä on välilyöntejä, tulee ne yhdistää yhteen riviin, esim Hampaaton läski = Hampaatonläski',
+      guildOnly: false,
+      permissions: 'admin',
+      usage: '<Monsterin nimi> <Bio>'
+    });
+  }
+
   async execute(msg, args) {
     const name = args[0];
     const bio = args.splice(1, args.length).join(' ');

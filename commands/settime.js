@@ -4,17 +4,27 @@
  * Change the time interval to the next spawn
  */
 
-module.exports = {
-  name: 'settime',
-  description: 'Change spawn timer',
-  guildOnly: true,
+const Command = require('../base/command');
+
+module.exports = class SetTimeCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'settime',
+      guildOnly: true,
+      description: 'Muuttaa spawnerin ajastimen',
+      extendedDescription: 'Muuttaa spawnerin ajastimen short = 1-5m, medium = 5-15m, long = 15-30m',
+      usage: '<short/medium/long>',
+      permissions: 'owner'
+    });
+  }
+
   execute(msg, args) {
     // If user is not Wokki#0001
     if (msg.author.id !== '108299947257925632') return;
     // Interval argument
     const interval = args[0];
     // Find the spawner
-    let spawner = msg.client.spawners.get(msg.guild.id);
+    let spawner = this.client.spawners.get(msg.guild.id);
     if (!spawner) return msg.reply('Spawner ei ole päällä');
     // Define times for short, medium and long
     let timer;

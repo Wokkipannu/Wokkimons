@@ -4,13 +4,21 @@
  * Display all monsters the player has caught with their level and shiny status
  */
 
+const Command = require('../base/command');
 const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 
-module.exports = {
-  name: 'monsters',
-  guildOnly: false,
-  description: 'Display monsters',
+module.exports = class MonstersCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'monsters',
+      guildOnly: false,
+      description: 'Listaa napatut monsterisi',
+      extendedDescription: 'Listaa napatut monsterisi kategoroituna harvinaisuuden mukaan',
+      usage: '<sivu>'
+    });
+  }
+
   async execute(msg, args) {
     // Fetch the player from database
     // If we don't have a player in the database, we'll send them a message

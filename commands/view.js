@@ -4,14 +4,21 @@
  * Displays a monster
  */
 
+const Command = require('../base/command');
 const { MessageEmbed } = require('discord.js');
 const MonController = require('../controllers/MonController');
 
-module.exports = {
-  name: 'view',
-  description: 'View a specific monster',
-  guildOnly: false,
-  permissions: 'admin',
+module.exports = class ViewCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'view',
+      guildOnly: false,
+      description: 'Näyttää monsterin tiedot',
+      extendedDescription: 'Näyttää halutun monsterin tiedot. Tehty bion lukemista varten.',
+      permissions: 'admin'
+    });
+  }
+
   async execute(msg, args) {
     const name = args.join(' ').toLowerCase();
     if (!name) return msg.reply('Oikea muoto `view <name>`');
