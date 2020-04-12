@@ -1,4 +1,4 @@
-const Monsters = require('../utils/monsters');
+const Utils = require('../utils/utils');
 const MonController = require('../controllers/MonController');
 const winston = require('../utils/logger');
 
@@ -18,15 +18,21 @@ module.exports = class Spawner {
   }
 
   init() {
-    const spawnerInterval = process.env.SPAWNER_INTERVAL.split("-");
-    this.min = parseInt(spawnerInterval[0]) * 60000;
-    this.max = parseInt(spawnerInterval[1]) * 60000;
-
-    if (!Number.isInteger(this.min) || !Number.isInteger(this.max) || this.min >= this.max || this.min < 1 || this.max < 2) {
+    try {
+      const spawnerInterval = process.env.SPAWNER_INTERVAL.split("-");
+      this.min = parseInt(spawnerInterval[0]) * 60000;
+      this.max = parseInt(spawnerInterval[1]) * 60000;
+  
+      if (!Number.isInteger(this.min) || !Number.isInteger(this.max) || this.min >= this.max || this.min < 1 || this.max < 2) {
+        this.initDefault();
+      }
+  
+      this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+    }
+    catch(error) {
+      winston.error(error);
       this.initDefault();
     }
-
-    this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
   }
 
   initDefault() {
@@ -50,7 +56,7 @@ module.exports = class Spawner {
       let mons = await MonController.getAllMons();
       let monsters = mons.filter(m => m.rarity === this.rarity);
       this.monster = monsters[Math.floor(Math.random() * monsters.length)];
-      this.monster.level = Monsters.getLevel();
+      this.monster.level = Utils.getLevel();
       this.monster.isShiny = this.isShiny;
 
       winston.info(`Spawning level ${this.monster.level} ${this.monster.name} on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
