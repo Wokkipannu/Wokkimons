@@ -1,8 +1,6 @@
 # Wokkimons
 Monster collecting game for Discord. Inspired by PokeCord. Collect em' all!
 
-[Invite Wokkimon to your server](https://discordapp.com/oauth2/authorize?client_id=689846496417415174&scope=bot&permissions=116736)
-
 # Requirements
 - Node.js 12.0.0 or newer
 - Database (PSQL used, but anything Sequelize supports should be fine)
