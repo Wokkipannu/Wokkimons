@@ -7,10 +7,10 @@
  */
 
 const Command = require('../base/command');
-const { MessageEmbed } = require('discord.js');
 const PlayerController = require('../controllers/PlayerController');
 const MonsterController = require('../controllers/MonsterController');
 const winston = require('../utils/logger');
+const Util = require('../utils/utils');
 
 module.exports = class CatchCommand extends Command {
   constructor(client) {
@@ -27,7 +27,7 @@ module.exports = class CatchCommand extends Command {
     // Join all arguments together so we can use spaces in monster names
     // Fetch the current monster from currentMonster collector
     const name = args.join(' ');
-    const currentMonster = this.client.currentMonster.get(msg.guild.id);
+    const currentMonster = this.client.monsters.get(msg.guild.id);
 
     // User did not define a name for the monster
     if (!name) {
@@ -50,26 +50,21 @@ module.exports = class CatchCommand extends Command {
 
       // Create the monster into the database and define it to the ID of
       // the user that we just found or created
-      await MonsterController.createMonster({ MonId: currentMonster.id, level: currentMonster.level, isShiny: currentMonster.isShiny, PlayerId: player.id });
+      const newMonster = await MonsterController.createMonster({ MonId: currentMonster.id, level: currentMonster.level, isShiny: currentMonster.isShiny, PlayerId: player.id });
+      const monster = await MonsterController.getMonster(newMonster.id);
 
       // Log to file
       winston.info(`${msg.author.tag} caught level ${currentMonster.level} ${currentMonster.name} ${currentMonster.isShiny ? '(Shiny)' : ''}`);
 
-      // Send congratulations text and embed to the channel
-      const embed = new MessageEmbed()
-        .setTitle(currentMonster.isShiny ? `⭐ ${currentMonster.name}` : currentMonster.name)
-        .setDescription(`Taso: **${currentMonster.level}**`)
-        .setImage(currentMonster.isShiny ? currentMonster.shinyImage : currentMonster.image);
+      msg.channel.send(`Onneksi olkoon, ${msg.author}! Nappasit tason **${monster.level}** **${monster.isShiny ? `⭐ ${monster.Mon.memberName}` : monster.Mon.memberName}**!`, { embed: Util.monsterEmbed(monster, player.color) });
 
-      msg.channel.send(`Onneksi olkoon, ${msg.author}! Nappasit tason **${currentMonster.level}** **${currentMonster.isShiny ? `⭐ ${currentMonster.memberName}` : currentMonster.memberName}**!`, { embed: embed });
-
-      this.client.currentMonster.set(msg.guild.id, '');
+      return this.client.monsters.set(msg.guild.id, '');
     }
     // User tried to catch a monster, but one does not exist
     // Technically this should never be possible
     else {
       winston.info(`${msg.author.tag} tried catch a monster but there is nothing to catch (g:${msg.guild.name} c:${msg.channel.name})`);
-      msg.reply('Odota seuraavaa monsteria');
+      return msg.reply('Odota seuraavaa monsteria');
     }
   }
 }

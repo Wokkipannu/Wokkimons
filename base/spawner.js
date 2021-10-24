@@ -4,41 +4,13 @@ const winston = require('../utils/logger');
 
 module.exports = class Spawner {
   constructor(dispatcher, serverId, channelId) {
-    this.spawner;
-    this.monster;
-    this.rarity;
-    this.isShiny;
-    this.status;
-    this.min;
-    this.max;
     this.dispatcher = dispatcher;
     this.serverId = serverId;
     this.channelId = channelId;
-    this.timer;
-  }
-
-  init() {
-    try {
-      const spawnerInterval = process.env.SPAWNER_INTERVAL.split("-");
-      this.min = parseInt(spawnerInterval[0]) * 60000;
-      this.max = parseInt(spawnerInterval[1]) * 60000;
-  
-      if (!Number.isInteger(this.min) || !Number.isInteger(this.max) || this.min >= this.max || this.min < 1 || this.max < 2) {
-        this.initDefault();
-      }
-  
-      this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-    }
-    catch(error) {
-      winston.error(error);
-      this.initDefault();
-    }
-  }
-
-  initDefault() {
-    winston.error('Invalid SPAWNER_INTERVAL environment value. Expected value is min-max, example 5-30. Using default value instead.');
-    this.min = 300000;
-    this.max = 1800000;
+    this.spawner;
+    this.status = false;
+    this.min = parseInt(process.env.SPAWNER_INTERVAL.split("-")[0]) * 60000 || 300000;
+    this.max = parseInt(process.env.SPAWNER_INTERVAL.split("-")[1]) * 60000 || 1800000;
     this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
   }
 
@@ -46,21 +18,21 @@ module.exports = class Spawner {
     winston.info(`Monster spawner started on server ${this.serverId} with ${this.timer / 60000} minutes interval`);
     this.status = true;
     this.spawner = setInterval(async () => {
-      this.isShiny = this.rollShiny();
-      this.rarity = this.randomizeRarity();
+      const isShiny = this.rollShiny();
+      const rarity = this.randomizeRarity();
 
       winston.info(`Spawning monster...`);
-      winston.info(`Shiny status: ${this.isShiny}`);
-      winston.info(`Rarity: ${this.rarity}`);
+      winston.info(`Shiny status: ${isShiny}`);
+      winston.info(`Rarity: ${rarity}`);
 
       let mons = await MonController.getAllMons();
       let monsters = mons.filter(m => m.rarity === this.rarity);
-      this.monster = monsters[Math.floor(Math.random() * monsters.length)];
-      this.monster.level = Utils.getLevel();
-      this.monster.isShiny = this.isShiny;
+      let monster = monsters[Math.floor(Math.random() * monsters.length)];
+      monster.level = Utils.getLevel();
+      monster.isShiny = this.isShiny;
 
-      winston.info(`Spawning level ${this.monster.level} ${this.monster.name} on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
-      this.dispatcher.dispatch('spawn', { monster: this.monster, serverId: this.serverId, channelId: this.channelId });
+      winston.info(`Spawning level ${monster.level} ${monster.name} on server ${this.serverId}. Spawn took ${this.timer / 60000} minutes.`);
+      this.dispatcher.dispatch('spawn', { monster: monster, serverId: this.serverId, channelId: this.channelId });
       this.timer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
       this.stop();
       this.start();
@@ -70,10 +42,6 @@ module.exports = class Spawner {
   stop() {
     this.status = false;
     clearInterval(this.spawner);
-  }
-
-  getStatus() {
-    return this.status;
   }
 
   randomizeRarity() {

@@ -32,7 +32,6 @@ module.exports = class StartCommand extends Command {
       if (!server || !server.spawnChannel) return msg.reply('Sinun tulee asettaa spawn kanava ensin käyttämällä `setchannel` komentoa');
       // Create a new spawner, start it and assign it to the spawners collection
       const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
-      Spawner.init();
       Spawner.start();
       this.client.spawners.set(msg.guild.id, Spawner);
       server.spawnerStatus = 1;
@@ -41,7 +40,7 @@ module.exports = class StartCommand extends Command {
     }
     // If we found a spawner, but it's already on we'll send a message
     // Otherwise we'll start it
-    if (sp.getStatus()) return msg.reply('Spawner on jo päällä');
+    if (sp.status) return msg.reply('Spawner on jo päällä');
     else {
       sp.start();
       server.spawnerStatus = 1;

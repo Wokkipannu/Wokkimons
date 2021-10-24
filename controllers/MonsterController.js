@@ -3,7 +3,9 @@ const models = require('../database/models');
 class MonsterController {
   static async createMonster(monster) {
     try {
-      const mon = await models.Monster.create(monster);
+      const mon = await models.Monster.create(monster, {
+        include: models.Mon
+      });
       return mon;
     }
     catch(error) {
@@ -14,7 +16,8 @@ class MonsterController {
   static async getMonster(monsterId) {
     try {
       const monster = await models.Monster.findOne({
-        where: { id: monsterId }
+        where: { id: monsterId },
+        include: models.Mon
       });
       if (monster) return monster;
       else return false;

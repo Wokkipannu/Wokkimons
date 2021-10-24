@@ -21,7 +21,7 @@ module.exports = class HintCommand extends Command {
 
   execute(msg, args) {
     // Get the current monster from collection
-    const currentMonster = this.client.currentMonster.get(msg.guild.id);
+    const currentMonster = this.client.monsters.get(msg.guild.id);
     // If we don't have a current monster
     if (!currentMonster) return msg.reply('Odota seuraavaa monsteria');
     // Create the hint variable

@@ -31,7 +31,7 @@ module.exports = class StopCommand extends Command {
     }
     // If we found a spawner, but it's already off we'll send a message
     // Otherwise we'll stop it
-    if (!spawner.getStatus()) return msg.reply('Spawner on jo pois päältä');
+    if (!spawner.status) return msg.reply('Spawner on jo pois päältä');
     else {
       spawner.stop();
       server.spawnerStatus = 0;

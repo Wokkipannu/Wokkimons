@@ -32,11 +32,15 @@ module.exports = class SetChannelCommand extends Command {
     server.spawnChannel = channel.id;
     // Save the server
     await server.save();
-    // Assign the spawner and start it
+    // Find if we have a spawner running
+    // If we do, stop it and set it to null
     let sp = this.client.spawners.get(msg.guild.id);
-    if (sp) sp.stop();
+    if (sp) {
+      sp.stop()
+      sp = null;
+    };
+    // Assign the spawner and start it
     const Spawner = new spawner(this.client.Dispatcher, msg.guild.id, channel.id);
-    Spawner.init();
     Spawner.start();
     this.client.spawners.set(msg.guild.id, Spawner);
     server.spawnerStatus = 1;

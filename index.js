@@ -10,12 +10,15 @@ const Discord = require('discord.js');
 const { MessageEmbed } = require('discord.js');
 const client = new Discord.Client();
 const fs = require('fs');
-
+const ServerController = require('./controllers/ServerController');
+const spawner = require('./base/spawner');
+const dispatcher = require('./utils/dispatcher');
 const winston = require('./utils/logger');
+const Util = require('./utils/utils');
 
 client.commands = new Discord.Collection();
 client.spawners = new Discord.Collection();
-client.currentMonster = new Discord.Collection();
+client.monsters = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -29,9 +32,6 @@ for (const file of commandFiles) {
   }
 }
 
-const ServerController = require('./controllers/ServerController');
-const spawner = require('./base/spawner');
-const dispatcher = require('./utils/dispatcher');
 client.Dispatcher = new dispatcher();
 
 client.on('ready', async () => {
@@ -42,7 +42,6 @@ client.on('ready', async () => {
   servers.forEach(server => {
     if (server.spawnChannel && server.spawnerStatus === 1) {
       const Spawner = new spawner(client.Dispatcher, server.serverId, server.spawnChannel);
-      Spawner.init();
       Spawner.start();
       client.spawners.set(server.serverId, Spawner);
     }
@@ -76,10 +75,9 @@ client.on('guildDelete', () => client.user.setActivity(`on ${client.guilds.cache
 
 client.login(process.env.TOKEN);
 
-client.currentMonster;
 // On spawn handles sending the monster spawns to the servers
 client.Dispatcher.on('spawn', data => {
-  client.currentMonster.set(data.serverId, data.monster);
+  client.monsters.set(data.serverId, data.monster);
 
   const guild = client.guilds.cache.find(g => g.id === data.serverId);
   const channel = guild.channels.cache.find(c => c.id === data.channelId);
@@ -92,13 +90,13 @@ client.Dispatcher.on('spawn', data => {
   else if (data.monster.rarity === 3) color = process.env.RARE_COLOR;
   else color = process.env.COMMON_COLOR;
 
-  const embed = new MessageEmbed()
+  /*const embed = new MessageEmbed()
     .setColor(color)
     .setTitle(`Villi ${data.monster.isShiny ? '⭐ monsteri' : 'monsteri'} ilmestyi!`)
     .setDescription(`Nappaa se kirjoittamalla w!catch <nimi>`)
-    .setImage(data.monster.isShiny ? data.monster.shinyImage : data.monster.image);
+    .setImage(data.monster.isShiny ? data.monster.shinyImage : data.monster.image);*/
   
-  channel.send(embed)
+  channel.send(Util.monsterEmbed(data.monster))
     .then(() => {
       winston.info(`Monster embed sent to channel`);
     })
